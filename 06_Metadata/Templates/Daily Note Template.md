@@ -1,24 +1,24 @@
 # {{date:YYYY-MM-DD}}
 
-## Capture
-<!-- Quick thoughts, links, ideas throughout the day -->
-- 
+## 捕获
+<!-- 一整天的快速思考、链接、想法 -->
+-
 
-## Questions
-<!-- What am I curious about today? -->
-- 
+## 问题
+<!-- 今天我对什么好奇? -->
+-
 
-## Insights
-<!-- What did I learn or realize? -->
-- 
+## 洞察
+<!-- 我学到了或意识到了什么? -->
+-
 
-## Connections
-<!-- Links to other notes or ideas -->
-- 
+## 联系
+<!-- 到其他笔记或想法的链接 -->
+-
 
-## For Tomorrow
-<!-- What needs follow-up? -->
-- 
+## 明天待办
+<!-- 什么需要跟进? -->
+-
 
 ---
-*End of day: Ask Claude Code to review and find connections*
+*一天结束时:让 Claude Code 审查并寻找联系*

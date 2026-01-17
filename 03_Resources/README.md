@@ -1,167 +1,167 @@
-# 📚 Resources
+# 📚 资源
 
-Your personal knowledge base of reference materials and evergreen notes.
+你的参考资料和常青笔记的个人知识库。
 
-## Purpose
+## 目的
 
-Resources are **reference materials** that:
-- You might need someday
-- Aren't tied to specific projects
-- Represent topics of ongoing interest
-- Build your knowledge base over time
+资源是**参考资料**,它们:
+- 你某天可能需要
+- 不与特定项目绑定
+- 代表持续感兴趣的主题
+- 随时间建立你的知识库
 
-## What Belongs Here
+## 什么属于这里
 
-### Categories to Consider
+### 建议的分类
 ```
 03_Resources/
-├── Articles/          # Saved web content
-├── Books/            # Book notes and summaries
-├── Concepts/         # Evergreen idea notes
-├── People/           # Notable people and thinkers
-├── Tools/            # Software, methods, frameworks
-├── Quotes/           # Memorable quotes
-├── Examples/         # Case studies, references
-└── Learning/         # Course notes, tutorials
+├── Articles/          # 保存的网页内容
+├── Books/            # 书籍笔记和摘要
+├── Concepts/         # 常青想法笔记
+├── People/           # 杰出人物和思想家
+├── Tools/            # 软件、方法、框架
+├── Quotes/           # 难忘的引用
+├── Examples/         # 案例研究、参考资料
+└── Learning/         # 课程笔记、教程
 ```
 
-### Good Resources
-- Tutorial on Python decorators
-- Article about mental models
-- Book notes from "Thinking, Fast and Slow"
-- Framework for decision-making
-- List of cognitive biases
-- Industry trend analysis
+### 好的资源
+- Python 装饰器教程
+- 关于思维模型的文章
+- 《思考,快与慢》读书笔记
+- 决策框架
+- 认知偏差列表
+- 行业趋势分析
 
-## Organization Principles
+## 组织原则
 
-### By Topic, Not Source
-❌ "Articles from Medium"
-✅ "AI Development Techniques"
+### 按主题,而非来源
+❌ "来自 Medium 的文章"
+✅ "AI 开发技术"
 
-### Evergreen Over Ephemeral
-❌ "News from March 2024"
-✅ "Principles of Network Effects"
+### 常青胜过短暂
+❌ "2024 年 3 月的新闻"
+✅ "网络效应原则"
 
-### Atomic Notes
-- One concept per note
-- Self-contained understanding
-- Heavily linked to related ideas
+### 原子笔记
+- 每个笔记一个概念
+- 自包含的理解
+- 与相关想法大量链接
 
-## Claude Code Workflows
+## Claude Code 工作流程
 
-### Building Knowledge
+### 建立知识
 ```
-I'm researching [topic].
-What do I already have in Resources?
-What gaps exist in my knowledge?
-```
-
-### Making Connections
-```
-Find all resources related to [concept].
-How do different sources approach this?
-What patterns emerge?
+我正在研究 [主题]。
+我在 Resources 中已经有什么?
+我的知识中存在什么差距?
 ```
 
-### Creating Synthesis
+### 建立联系
 ```
-Review all notes about [topic] in Resources.
-Create a synthesis document of key insights.
-```
-
-### Finding Examples
-```
-I need examples of [concept].
-Search my resources for relevant cases.
+查找与 [概念] 相关的所有资源。
+不同来源如何处理这个问题?
+出现了什么模式?
 ```
 
-## Resource Development
-
-### From Consumption to Creation
-1. **Capture**: Save interesting content
-2. **Process**: Extract key ideas
-3. **Connect**: Link to existing notes
-4. **Develop**: Build your own understanding
-5. **Create**: Generate original insights
-
-### Progressive Summarization
-- First pass: Highlight interesting parts
-- Second pass: Bold the most important
-- Third pass: Create summary at top
-- Fourth pass: Extract to own note
-
-## Claude Code Prompts
-
-### Knowledge Audit
+### 创建综合
 ```
-Analyze my Resources folder.
-What topics am I building expertise in?
-Where are the gaps?
+审查 Resources 中关于 [主题] 的所有笔记。
+创建关键洞察的综合文档。
 ```
 
-### Connection Discovery
+### 查找示例
 ```
-Find surprising connections between 
-different topics in my Resources.
-```
-
-### Learning Path
-```
-Based on my resources about [topic],
-what should I learn next?
-Create a learning path.
+我需要 [概念] 的示例。
+在我的资源中搜索相关案例。
 ```
 
-### Concept Clarification
+## 资源发展
+
+### 从消费到创造
+1. **捕获**: 保存有趣的内容
+2. **处理**: 提取关键想法
+3. **连接**: 链接到现有笔记
+4. **发展**: 建立你自己的理解
+5. **创造**: 生成原创洞察
+
+### 渐进式总结
+- 第一遍: 高亮有趣的部分
+- 第二遍: 加粗最重要的内容
+- 第三遍: 在顶部创建摘要
+- 第四遍: 提取到自己的笔记
+
+## Claude Code 提示
+
+### 知识审计
 ```
-Explain [concept] using examples 
-from my existing resources.
+分析我的 Resources 文件夹。
+我正在哪些主题上建立专业知识?
+哪里存在差距?
 ```
 
-## Best Practices
+### 连接发现
+```
+在我的 Resources 中不同主题之间
+找到令人惊讶的联系。
+```
 
-### Naming Conventions
-- Clear, descriptive titles
-- Include key concepts in name
-- Avoid dates (unless historical)
-- Use consistent formatting
+### 学习路径
+```
+基于我关于 [主题] 的资源,
+我应该接下来学习什么?
+创建一个学习路径。
+```
 
-### Note Structure
+### 概念澄清
+```
+使用我现有资源中的示例
+解释 [概念]。
+```
+
+## 最佳实践
+
+### 命名约定
+- 清晰、描述性的标题
+- 在名称中包含关键概念
+- 避免日期(除非是历史性的)
+- 使用一致的格式
+
+### 笔记结构
 ```markdown
-# Concept Name
+# 概念名称
 
-## Summary
-One paragraph overview
+## 摘要
+一段话概述
 
-## Key Points
-- Main idea 1
-- Main idea 2
-- Main idea 3
+## 关键点
+- 主要想法 1
+- 主要想法 2
+- 主要想法 3
 
-## Connections
-- Related to: [[Other Concept]]
-- Contrasts with: [[Different Idea]]
-- Examples: [[Case Study]]
+## 连接
+- 相关于: [[其他概念]]
+- 对比于: [[不同想法]]
+- 示例: [[案例研究]]
 
-## Sources
-- Original article/book/video
+## 来源
+- 原始文章/书籍/视频
 ```
 
-### Maintenance
-- Review and update regularly
-- Merge duplicate concepts
-- Strengthen connections
-- Delete what's no longer relevant
+### 维护
+- 定期审查和更新
+- 合并重复的概念
+- 加强连接
+- 删除不再相关的内容
 
-## Tips
+## 提示
 
-- **Quality over quantity** - Better to deeply understand few concepts
-- **Your words matter** - Rewrite in your own understanding
-- **Links are gold** - Connections create value
-- **Review regularly** - Unused knowledge fades
-- **Share freely** - Teaching solidifies understanding
+- **质量胜于数量** - 最好深入理解少数概念
+- **你的语言很重要** - 用你自己的理解重写
+- **链接是金** - 连接创造价值
+- **定期审查** - 未使用的知识会淡化
+- **自由分享** - 教学巩固理解
 
-## Remember
+## 记住
 
-Resources are your external brain. The value isn't in collecting, but in connecting and creating. Use Claude Code to help you see patterns and build understanding across your entire knowledge base.
+资源是你的外脑。价值不在于收集,而在于连接和创造。使用 Claude Code 帮助你看到模式并在整个知识库中建立理解。

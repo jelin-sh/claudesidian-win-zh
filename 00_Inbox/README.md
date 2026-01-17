@@ -1,68 +1,68 @@
-# 📥 Inbox
+# 📥 收件箱
 
-Your capture zone for new ideas, quick thoughts, and unprocessed information.
+你的新想法、快速思考和未处理信息的捕获区域。
 
-## Purpose
+## 目的
 
-The Inbox is a **temporary** holding area designed for:
-- Quick capture without worrying about organization
-- Daily notes and journaling
-- Web clippings and interesting finds
-- Meeting notes before processing
-- Random thoughts and ideas
+收件箱是一个**临时**保存区域,专为以下目的设计:
+- 快速捕获,无需担心组织
+- 每日笔记和日记
+- 网页剪辑和有趣的发现
+- 处理前的会议笔记
+- 随机的想法和点子
 
-## How to Use
+## 如何使用
 
-### Daily Workflow
-1. **Capture first, organize later** - Don't slow down to categorize
-2. **Use daily notes** - One note per day for stream of consciousness
-3. **Dump links and quotes** - Save now, process later
-4. **Don't let it pile up** - Process weekly
+### 每日工作流程
+1. **先捕获,后整理** - 不要因为分类而放慢速度
+2. **使用每日笔记** - 每天一个笔记,记录意识流
+3. **转储链接和引用** - 现在保存,稍后处理
+4. **不要堆积** - 每周处理一次
 
-### Weekly Processing
-Every week, review your inbox and:
-- Move project-related notes to `01_Projects/`
-- Move ongoing topics to `02_Areas/`
-- Move reference material to `03_Resources/`
-- Archive completed items to `04_Archive/`
-- Delete what's no longer relevant
+### 每周处理
+每周审查你的收件箱并:
+- 将项目相关的笔记移至 `01_Projects/`
+- 将持续的主题移至 `02_Areas/`
+- 将参考资料移至 `03_Resources/`
+- 将已完成的项目归档至 `04_Archive/`
+- 删除不再相关的内容
 
-## Claude Code Commands
+## Claude Code 命令
 
-### Quick Capture
+### 快速捕获
 ```
-Create a new note in 00_Inbox called [title] 
-with these thoughts: [content]
-```
-
-### Process Inbox
-```
-Review all notes in 00_Inbox.
-Help me decide where each should go 
-based on the PARA method.
+在 00_Inbox 中创建一个名为[标题]的新笔记
+包含这些想法:[内容]
 ```
 
-### Find Connections
+### 处理收件箱
 ```
-Look at recent notes in my inbox.
-What patterns or themes do you see?
-What existing notes might these connect to?
+审查 00_Inbox 中的所有笔记。
+帮助我根据 PARA 方法
+决定每个笔记应该去哪里。
 ```
 
-## Tips
+### 寻找联系
+```
+查看我收件箱中的最近笔记。
+你看到了什么模式或主题?
+这些可能与哪些现有笔记相关联?
+```
 
-- **Don't aim for perfection** - The inbox is meant to be messy
-- **Use descriptive filenames** - Makes processing easier
-- **Date your notes** - YYYY-MM-DD format helps with sorting
-- **Link liberally** - Even to notes that don't exist yet
-- **Review regularly** - Don't let items sit for more than 2 weeks
+## 提示
 
-## File Naming
+- **不要追求完美** - 收件箱本来就应该有点乱
+- **使用描述性文件名** - 使处理更容易
+- **给笔记加日期** - YYYY-MM-DD 格式有助于排序
+- **自由链接** - 即使是还不存在的笔记
+- **定期审查** - 不要让项目停留超过 2 周
 
-Suggested formats:
-- Daily notes: `2024-03-15.md`
-- Quick captures: `2024-03-15 - Meeting with Team.md`
-- Web clips: `2024-03-15 - Article Title - Source.md`
-- Ideas: `Idea - Brief Description.md`
+## 文件命名
 
-Remember: The Inbox is where ideas begin, not where they live forever.
+建议格式:
+- 每日笔记: `2024-03-15.md`
+- 快速捕获: `2024-03-15 - 团队会议.md`
+- 网页剪辑: `2024-03-15 - 文章标题 - 来源.md`
+- 想法: `想法 - 简短描述.md`
+
+记住:收件箱是想法开始的地方,不是它们永久居住的地方。

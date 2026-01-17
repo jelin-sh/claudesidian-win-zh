@@ -1,161 +1,161 @@
-# 📎 Attachments
+# 📎 附件
 
-Storage for images, PDFs, and other non-text files.
+图片、PDF 和其他非文本文件的存储。
 
-## Purpose
+## 目的
 
-Centralized location for:
-- Images and screenshots
-- PDFs and documents
-- Spreadsheets and data files
-- Audio and video files
-- Any binary files referenced in notes
+以下内容的集中位置:
+- 图片和截图
+- PDF 和文档
+- 电子表格和数据文件
+- 音频和视频文件
+- 笔记中引用的任何二进制文件
 
-## Organization
+## 组织
 
 ```
 05_Attachments/
-├── Organized/          # Processed files with good names
+├── Organized/          # 已处理的文件,有好的名称
 │   ├── Images/
 │   ├── PDFs/
 │   └── Data/
-├── IMG_*.png          # Unprocessed phone images
-├── Screenshot*.png    # Unprocessed screenshots
-├── CleanShot*.png    # Unprocessed CleanShot files
-└── *.pdf             # Various PDFs
+├── IMG_*.png          # 未处理的手机图片
+├── Screenshot*.png    # 未处理的截图
+├── CleanShot*.png    # 未处理的 CleanShot 文件
+└── *.pdf             # 各种 PDF
 ```
 
-## Naming Conventions
+## 命名约定
 
-### Before Processing
-- `IMG_1234.png` (from phone)
+### 处理前
+- `IMG_1234.png` (来自手机)
 - `Screenshot 2024-03-15 at 2.30.45 PM.png`
 - `CleanShot 2024-03-15 at 14.30.45.png`
 - `document(1).pdf`
 
-### After Processing
-- `2024-03-15_Project_Architecture_Diagram.png`
-- `2024-03-15_Meeting_Whiteboard.jpg`
-- `API_Documentation_v2.pdf`
-- `Customer_Interview_Transcript.pdf`
+### 处理后
+- `2024-03-15_项目架构图.png`
+- `2024-03-15_会议白板.jpg`
+- `API_文档_v2.pdf`
+- `客户访谈记录.pdf`
 
-## Helper Scripts
+## 辅助脚本
 
-Run these with `pnpm`:
+使用 `pnpm` 运行这些脚本:
 
-### Viewing Status
-- `attachments:list` - List unprocessed files
-- `attachments:count` - Count unprocessed files
-- `attachments:organized` - Count organized files
-- `attachments:sizes` - Show largest files
-- `attachments:recent` - Files added in last 7 days
+### 查看状态
+- `attachments:list` - 列出未处理的文件
+- `attachments:count` - 统计未处理的文件
+- `attachments:organized` - 统计已整理的文件
+- `attachments:sizes` - 显示最大的文件
+- `attachments:recent` - 过去 7 天添加的文件
 
-### Finding Issues
-- `attachments:orphans` - Files not referenced anywhere
-- `attachments:refs [filename]` - Find references to file
+### 查找问题
+- `attachments:orphans` - 任何地方都未引用的文件
+- `attachments:refs [filename]` - 查找对文件的引用
 
-### Organization
-- `attachments:create-organized` - Create Organized folder
+### 组织
+- `attachments:create-organized` - 创建 Organized 文件夹
 
-## Claude Code Workflows
+## Claude Code 工作流程
 
-### Process Screenshots
+### 处理截图
 ```
-Look at recent screenshots in 05_Attachments.
-Based on their content, suggest better names.
-Help me organize them.
-```
-
-### Find Orphans
-```
-Find all attachments not referenced in any notes.
-Should any be deleted?
+查看 05_Attachments 中的最近截图。
+基于它们的内容,建议更好的名称。
+帮助我组织它们。
 ```
 
-### Rename Batch
+### 查找孤立文件
 ```
-Review unprocessed images in Attachments.
-Suggest descriptive names based on content.
-```
-
-### Clean Up
-```
-Find duplicate images in Attachments.
-Find files over 10MB.
-What can be compressed or removed?
+查找任何笔记中未引用的所有附件。
+有应该删除的吗?
 ```
 
-## Best Practices
+### 批量重命名
+```
+审查 Attachments 中未处理的图片。
+基于内容建议描述性名称。
+```
 
-### File Sizes
-- Keep images under 2MB for Git
-- Compress large PDFs
-- Use external storage for video
-- Optimize images before committing
+### 清理
+```
+在 Attachments 中查找重复图片。
+查找超过 10MB 的文件。
+什么可以压缩或删除?
+```
 
-### Naming
-- Include date: `YYYY-MM-DD`
-- Be descriptive but concise
-- Use underscores not spaces
-- Include version numbers if relevant
+## 最佳实践
 
-### Linking
+### 文件大小
+- 保持图片在 2MB 以下以便 Git
+- 压缩大型 PDF
+- 对视频使用外部存储
+- 提交前优化图片
+
+### 命名
+- 包含日期: `YYYY-MM-DD`
+- 描述性但简洁
+- 使用下划线而不是空格
+- 如相关包含版本号
+
+### 链接
 ```markdown
-# Embedding images
+# 嵌入图片
 ![[05_Attachments/Organized/diagram.png]]
 
-# Linking PDFs
+# 链接 PDF
 [[05_Attachments/Organized/document.pdf]]
 
-# With descriptions
-![[05_Attachments/Organized/chart.png|Sales Chart Q1]]
+# 带描述
+![[05_Attachments/Organized/chart.png|销售图表 Q1]]
 ```
 
-## Processing Workflow
+## 处理工作流程
 
-1. **Capture**: Save files to `05_Attachments/`
-2. **Review**: Look at content, determine purpose
-3. **Rename**: Give descriptive, dated name
-4. **Organize**: Move to `Organized/` subfolder
-5. **Link**: Update references in notes
-6. **Clean**: Remove orphaned files
+1. **捕获**: 将文件保存到 `05_Attachments/`
+2. **审查**: 查看内容,确定目的
+3. **重命名**: 给出描述性的、带日期的名称
+4. **组织**: 移动到 `Organized/` 子文件夹
+5. **链接**: 更新笔记中的引用
+6. **清理**: 删除孤立文件
 
-## Claude Code Prompts
+## Claude Code 提示
 
-### Vision Analysis
+### 视觉分析
 ```
-Analyze the images in Attachments.
-What do they contain?
-Suggest appropriate names and organization.
-```
-
-### Bulk Processing
-```
-Process all CleanShot files from this week.
-Rename based on content.
-Move to Organized.
+分析 Attachments 中的图片。
+它们包含什么?
+建议合适的名称和组织。
 ```
 
-### Storage Audit
+### 批量处理
 ```
-Analyze attachment storage:
-- Total size
-- Largest files
-- File type distribution
-- Orphaned files
+处理这周的所有 CleanShot 文件。
+基于内容重命名。
+移至 Organized。
 ```
 
-## Tips
+### 存储审计
+```
+分析附件存储:
+- 总大小
+- 最大的文件
+- 文件类型分布
+- 孤立文件
+```
 
-- **Process weekly** - Don't let files pile up
-- **Name immediately** - Context fades fast
-- **Link purposefully** - Only embed what adds value
-- **Compress aggressively** - Storage adds up
-- **Delete liberally** - Not every screenshot matters
+## 提示
 
-## Git Considerations
+- **每周处理** - 不要让文件堆积
+- **立即命名** - 背景淡化很快
+- **有目的地链接** - 只嵌入增加价值的内容
+- **积极压缩** - 存储会累积
+- **自由删除** - 不是每个截图都重要
 
-### .gitignore suggestions
+## Git 考虑
+
+### .gitignore 建议
 ```
 *.mp4
 *.mov
@@ -164,12 +164,12 @@ Analyze attachment storage:
 files_over_10mb/
 ```
 
-### For Large Files
-- Use Git LFS for files over 10MB
-- Consider external storage
-- Link to cloud storage instead
-- Keep local but gitignore
+### 对于大文件
+- 对超过 10MB 的文件使用 Git LFS
+- 考虑外部存储
+- 改为链接到云存储
+- 保持本地但 gitignore
 
-## Remember
+## 记住
 
-Attachments support your notes, they don't replace them. A well-named, well-organized attachment is worth a thousand random screenshots. Use Claude Code's vision capabilities to help process and organize visual content efficiently.
+附件支持你的笔记,它们不替代笔记。一个命名良好、组织良好的附件值一千个随机截图。使用 Claude Code 的视觉功能帮助高效处理和组织视觉内容。

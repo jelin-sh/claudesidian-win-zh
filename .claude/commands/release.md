@@ -1,184 +1,178 @@
 ---
 name: release
 description:
-  Automatically bump version, update changelog, commit, tag, and push a new
-  release based on recent changes
+  自动升级版本、更新变更日志、提交、标记并推送基于最近更改的新版本
 allowed-tools: [Read, Write, Edit, MultiEdit, Bash, Grep]
 argument-hint:
-  "(optional) 'major', 'minor', 'patch', or leave blank for auto-detection"
+  "(可选)'major'、'minor'、'patch'或留空以自动检测"
 ---
 
-# Release Command
+# 发布命令
 
-Automates the entire release process: analyzes recent commits to determine
-version bump type, updates version in package.json, moves unreleased changelog
-entries to the new version, commits everything, creates a git tag, and pushes to
-GitHub.
+自动化整个发布流程:分析最近的提交以确定版本升级类型、更新 package.json 中的版本、将未发布的变更日志条目移动到新版本、提交所有内容、创建 git 标签并推送到 GitHub。
 
-## Task
+## 任务
 
-1. Analyze recent commits since last tag to determine version bump type
-2. Update version in package.json
-3. Move "Unreleased" entries in CHANGELOG.md to the new version section
-4. Commit the changes
-5. Create an annotated git tag
-6. Push commits and tags to GitHub
+1. 分析自上次标记以来的最近提交,以确定版本升级类型
+2. 更新 package.json 中的版本
+3. 将 CHANGELOG.md 中的"未发布"条目移动到新版本部分
+4. 提交更改
+5. 创建带注释的 git 标签
+6. 将提交和标签推送到 GitHub
 
-## Process
+## 流程
 
-1. **Check Prerequisites**
-   - Ensure on main/master branch
-   - Check for uncommitted changes
-   - Verify CHANGELOG.md and package.json exist
-   - Get current version from package.json
+1. **检查先决条件**
+   - 确保在 main/master 分支上
+   - 检查是否有未提交的更改
+   - 验证 CHANGELOG.md 和 package.json 是否存在
+   - 从 package.json 获取当前版本
 
-2. **Determine Version Bump**
-   - If argument provided (major/minor/patch), use that
-   - Otherwise, analyze commits since last tag:
-     - Look for "BREAKING CHANGE" or "!" = major bump
-     - Look for "feat:" = minor bump
-     - Look for "fix:", "docs:", "chore:" = patch bump
-   - Calculate new version number
+2. **确定版本升级**
+   - 如果提供了参数(major/minor/patch),则使用该参数
+   - 否则,分析自上次标记以来的提交:
+     - 查找 "BREAKING CHANGE" 或 "!" = major 升级
+     - 查找 "feat:" = minor 升级
+     - 查找 "fix:"、"docs:"、"chore:" = patch 升级
+   - 计算新版本号
 
-3. **Update Files**
-   - Update version in package.json
-   - Move "Unreleased" section in CHANGELOG.md to new version section
-   - Add comparison links for the new version
-   - Create new empty "Unreleased" section
+3. **更新文件**
+   - 更新 package.json 中的版本
+   - 将 CHANGELOG.md 中的"未发布"部分移动到新版本部分
+   - 为新版本添加比较链接
+   - 创建新的空"未发布"部分
 
-4. **Git Operations**
-   - Stage changes: `git add package.json CHANGELOG.md`
-   - Commit: `git commit -m "chore: release v{version}"`
-   - Create annotated tag: `git tag -a v{version} -m "Release v{version}"`
-   - Push commits: `git push`
-   - Push tags: `git push --tags`
+4. **Git 操作**
+   - 暂存更改: `git add package.json CHANGELOG.md`
+   - 提交: `git commit -m "chore: release v{version}"`
+   - 创建带注释的标签: `git tag -a v{version} -m "Release v{version}"`
+   - 推送提交: `git push`
+   - 推送标签: `git push --tags`
 
-5. **Create GitHub Release**
-   - Use `gh release create` to publish the release automatically
-   - Extract the version section from CHANGELOG.md for release notes
-   - Include the "Generated with Claude Code" footer
-   - This ensures the release is visible in GitHub's releases page
+5. **创建 GitHub 发布**
+   - 使用 `gh release create` 自动发布
+   - 从 CHANGELOG.md 中提取版本部分作为发布说明
+   - 包含"使用 Claude Code 生成"的页脚
+   - 这确保发布在 GitHub 的发布页面可见
 
-6. **Provide Confirmation**
-   - Show the GitHub release URL
-   - Confirm successful publication
+6. **提供确认**
+   - 显示 GitHub 发布 URL
+   - 确认发布成功
 
-## Version Bump Rules
+## 版本升级规则
 
-### Semantic Versioning (MAJOR.MINOR.PATCH)
+### 语义版本控制(MAJOR.MINOR.PATCH)
 
-**Quick Decision Guide:**
+**快速决策指南:**
 
-- Can users do something they couldn't do before? → **MINOR**
-- Did something that worked break? → **MAJOR** (if breaking) or **PATCH** (if
-  fixing)
-- Did something that worked get better? → **PATCH**
+- 用户可以做以前做不到的事情吗? → **MINOR**
+- 以前能用的东西坏了吗? → **MAJOR**(如果是破坏性更改)或 **PATCH**(如果是修复)
+- 以前能用的东西变好了吗? → **PATCH**
 
-**MAJOR** (1.0.0 → 2.0.0):
+**MAJOR**(1.0.0 → 2.0.0):
 
-- Breaking changes that require users to change their code/config
-- Removing features or commands
-- Changing command syntax or behavior incompatibly
-- Commits with "BREAKING CHANGE" in body
-- Commits with "!" after type (e.g., "feat!:")
+- 需要用户更改代码/配置的破坏性更改
+- 删除功能或命令
+- 不兼容地更改命令语法或行为
+- 提交消息正文中包含 "BREAKING CHANGE"
+- 类型后带有 "!" 的提交(例如 "feat!:")
 
-**MINOR** (1.0.0 → 1.1.0):
+**MINOR**(1.0.0 → 1.1.0):
 
-- **NEW capabilities** added (not enhancements to existing features)
-- Making something possible that wasn't possible before
-- New commands, new tools, new integrations
-- New optional features that don't affect existing functionality
-- Significant architectural changes that enable new functionality
-- Commits starting with "feat:" that add NEW functionality
-- Examples:
-  - Adding a new `/command`
-  - Adding a new MCP server
-  - Adding vault import capability (first time)
-  - Making upgrade work without git connection (was impossible before)
-  - Enabling a feature to work offline when it required internet before
+- 添加了**新功能**(不是对现有功能的增强)
+- 使以前不可能的事情成为可能
+- 新命令、新工具、新集成
+- 不影响现有功能的新可选功能
+- 启用新功能的重要架构更改
+- 以 "feat:" 开头并添加新功能的提交
+- 示例:
+  - 添加新的 `/command`
+  - 添加新的 MCP 服务器
+  - 添加仓库导入功能(首次)
+  - 使升级在没有 git 连接的情况下工作(以前是不可能的)
+  - 使功能在需要互联网的情况下可以离线工作
 
-**PATCH** (1.0.0 → 1.0.1):
+**PATCH**(1.0.0 → 1.0.1):
 
-- Bug fixes and minor improvements
-- Enhancements to existing features (that already worked)
-- Performance improvements
-- Documentation updates
-- Refactoring without changing behavior
-- Commits with "fix:", "docs:", "style:", "refactor:", "perf:", "test:",
-  "chore:"
-- Examples:
-  - Making an existing command smarter (but not enabling new use cases)
-  - Improving error messages
-  - Fixing bugs in existing features
-  - Enhancing existing import to be more intelligent
-  - Improving UI/formatting of existing features
+- 错误修复和小改进
+- 对现有功能的增强(已经可以工作的)
+- 性能改进
+- 文档更新
+- 不改变行为的重构
+- 带有 "fix:"、"docs:"、"style:"、"refactor:"、"perf:"、"test:"、"chore:" 的提交
+- 示例:
+  - 使现有命令更智能(但不启用新的用例)
+  - 改进错误消息
+  - 修复现有功能中的错误
+  - 增强现有导入使其更智能
+  - 改进现有功能的 UI/格式
 
-### Commit Message Best Practices
+### 提交消息最佳实践
 
-**Use "feat:" only for NEW features:**
+**仅对NEW功能使用 "feat:":**
 
 - ✅ `feat: add vault import capability`
-- ❌ `feat: enhance vault import` (should be `fix:` or `refactor:`)
+- ❌ `feat: enhance vault import`(应该是 `fix:` 或 `refactor:`)
 
-**Use "fix:" for improvements and corrections:**
+**对改进和更正使用 "fix:":**
 
 - ✅ `fix: improve vault detection accuracy`
 - ✅ `fix: correct file counting in init-bootstrap`
 
-**Use "refactor:" for code improvements:**
+**对代码改进使用 "refactor:":**
 
 - ✅ `refactor: enhance profile building with URL fetching`
 - ✅ `refactor: make init-bootstrap questions smarter`
 
-**Use "perf:" for performance improvements:**
+**对性能改进使用 "perf:":**
 
 - ✅ `perf: optimize vault analysis for large vaults`
 
-## Example Usage
+## 使用示例
 
 ```bash
-# Auto-detect version bump from commits
+# 从提交中自动检测版本升级
 claude run release
 
-# Force specific version bump
+# 强制特定版本升级
 claude run release patch
 claude run release minor
 claude run release major
 
-# Example output:
-# 📦 Current version: 0.1.0
-# 🔍 Analyzing commits since last release...
+# 输出示例:
+# 📦 当前版本: 0.1.0
+# 🔍 分析自上次发布以来的提交...
 #
-# Found commits:
+# 找到的提交:
 # - feat: add video support to Gemini Vision
 # - docs: update README with setup instructions
 # - fix: correct attachment link handling
 #
-# ✨ Detected version bump: MINOR (new features added)
-# 📝 New version: 0.2.0
+# ✨ 检测到版本升级: MINOR(添加了新功能)
+# 📝 新版本: 0.2.0
 #
-# ✅ Updated package.json
-# ✅ Updated CHANGELOG.md
-# ✅ Committed changes
-# ✅ Created tag v0.2.0
-# ✅ Pushed to GitHub
-# ✅ Created GitHub release
+# ✅ 已更新 package.json
+# ✅ 已更新 CHANGELOG.md
+# ✅ 已提交更改
+# ✅ 已创建标签 v0.2.0
+# ✅ 已推送到 GitHub
+# ✅ 已创建 GitHub 发布
 #
-# 🎉 Release v0.2.0 complete!
+# 🎉 发布 v0.2.0 完成!
 #
-# GitHub Release: https://github.com/user/repo/releases/tag/v0.2.0
+# GitHub 发布: https://github.com/user/repo/releases/tag/v0.2.0
 ```
 
-## Error Handling
+## 错误处理
 
-- If not on main branch: "Please switch to main branch first"
-- If uncommitted changes: "Please commit or stash changes first"
-- If no changes since last release: "No changes to release"
-- If version already exists: "Version X.X.X already exists"
+- 如果不在 main 分支上:"请先切换到 main 分支"
+- 如果有未提交的更改:"请先提交或存储更改"
+- 如果自上次发布以来没有更改:"没有要发布的更改"
+- 如果版本已存在:"版本 X.X.X 已存在"
 
-## Safety Features
+## 安全功能
 
-- Dry run mode: Show what would happen without making changes
-- Confirmation prompt before pushing
-- Validation of version format
-- Check for existing tags before creating
+- 空运行模式:显示将要发生的内容而不进行更改
+- 推送前确认提示
+- 验证版本格式
+- 创建前检查现有标签

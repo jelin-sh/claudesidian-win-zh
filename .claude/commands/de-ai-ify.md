@@ -1,92 +1,87 @@
 ---
 allowed-tools: Read, Write, Edit
-description: Remove AI-generated jargon and restore human voice to text
-argument-hint: [file_path]
+description: 移除 AI 生成的术语并恢复文本的人类声音
+argument-hint: [文件路径]
 ---
 
-# De-AI-ify Text
+# 去除 AI 味文本
 
-Remove AI-generated patterns and restore natural human voice to your writing.
+移除 AI 生成的模式,恢复你的写作的自然人类声音。
 
-## Processing: $ARGUMENTS
+## 处理中: $ARGUMENTS
 
-I'll create a de-AI-ified version of your text that sounds more human and less
-machine-generated.
+我将创建一个去 AI 味的文本版本,使其听起来更人性化,减少机器生成的感觉。
 
-## What Gets Removed
+## 移除的内容
 
-### 1. Overused Transitions
+### 1. 过度使用的过渡词
 
-- "Moreover," "Furthermore," "Additionally," "Nevertheless"
-- Excessive "However" usage
-- "While X, Y" openings
+- "此外"、"而且"、"另外"、"然而"
+- 过度使用"然而"
+- "虽然 X,但 Y"的开头
 
-### 2. AI Clichés
+### 2. AI 陈词滥调
 
-- "In today's fast-paced world"
-- "Let's dive deep"
-- "Unlock your potential"
-- "Harness the power of"
+- "在当今快节奏的世界中"
+- "让我们深入探讨"
+- "释放你的潜力"
+- "利用...的力量"
 
-### 3. Hedging Language
+### 3. 模糊语言
 
-- "It's important to note"
-- "It's worth mentioning"
-- Vague quantifiers: "various," "numerous," "myriad"
+- "值得注意的是"
+- "值得一提的是"
+- 模糊量词:"各种"、"众多"、"无数"
 
-### 4. Corporate Buzzwords
+### 4. 企业流行语
 
-- "utilize" → "use"
-- "facilitate" → "help"
-- "optimize" → "improve"
-- "leverage" → "use"
+- "utilize"(利用) → "use"(使用)
+- "facilitate"(促进) → "help"(帮助)
+- "optimize"(优化) → "improve"(改进)
+- "leverage"(利用) → "use"(使用)
 
-### 5. Robotic Patterns
+### 5. 机械模式
 
-- Rhetorical questions followed by immediate answers
-- Obsessive parallel structures
-- Always using exactly three examples
-- Announcement of emphasis
+- 反问后立即回答
+- 强迫性的平行结构
+- 总是恰好使用三个例子
+- 强调的宣告
 
-## What Gets Added
+## 添加的内容
 
-### Natural Voice
+### 自然声音
 
-- Varied sentence lengths
-- Conversational tone
-- Direct statements
-- Specific examples
+- 变化的句子长度
+- 对话语气
+- 直接陈述
+- 具体例子
 
-### Human Rhythm
+### 人类节奏
 
-- Natural transitions
-- Confident assertions
-- Personal perspective
-- Authentic phrasing
+- 自然过渡
+- 自信断言
+- 个人观点
+- 真实措辞
 
-## Process
+## 流程
 
-1. **Read original file**
-2. **Create copy with "-HUMAN" suffix**
-3. **Apply de-AI-ification**
-4. **Provide change log**
+1. **读取原始文件**
+2. **创建带有"-HUMAN"后缀的副本**
+3. **应用去 AI 味处理**
+4. **提供更改日志**
 
-## Output
+## 输出
 
-You'll get:
+你将获得:
 
-- A new file with natural human voice
-- Change log showing what was fixed
-- List of places needing specific examples
+- 一个具有自然人类声音的新文件
+- 显示已修复内容的更改日志
+- 需要具体示例的地方列表
 
-## Example Transformations
+## 转换示例
 
-**Before (AI):** "In today's rapidly evolving digital landscape, it's crucial to
-understand that leveraging AI effectively isn't just about utilizing
-cutting-edge technology—it's about harnessing its transformative potential to
-unlock unprecedented opportunities."
+**之前(AI 味):** "在当今快速发展的数字环境中,关键是要理解有效利用 AI 不仅仅是使用尖端技术——而是要利用其变革潜力来释放前所未有的机遇。"
 
-**After (Human):** "AI works best when you use it for specific tasks. Focus on
-what it does well: writing code, analyzing data, and answering questions."
+**之后(人类):** "AI 在用于特定任务时效果最好。专注于它擅长的方面:编写代码、分析数据和回答问题。"
 
-Let me de-AI-ify your text!
+让我为你的文本去除 AI 味!

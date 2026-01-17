@@ -1,138 +1,138 @@
-# ⚙️ Metadata
+# ⚙️ 元数据
 
-Vault configuration, documentation, and organizational tools.
+仓库配置、文档和组织工具。
 
-## Purpose
+## 目的
 
-The metadata folder contains:
-- Documentation about the vault
-- Templates for consistent note creation
-- Reference guides and how-tos
-- Agent configurations
-- Workflow documentation
+元数据文件夹包含:
+- 关于仓库的文档
+- 笔记创建的模板
+- 参考指南和操作指南
+- 代理配置
+- 工作流程文档
 
-## Structure
+## 结构
 
 ```
 06_Metadata/
-├── Reference/         # Guides and documentation
-├── Templates/        # Note templates
-├── Agents/          # Claude Code agent configs
-├── Workflows/       # Documented processes
-└── Archive/        # Old configurations
+├── Reference/         # 指南和文档
+├── Templates/        # 笔记模板
+├── Agents/          # Claude Code 代理配置
+├── Workflows/       # 记录的流程
+└── Archive/        # 旧配置
 ```
 
-## What Lives Here
+## 这里的内容
 
 ### Reference
-- This vault's documentation
-- Claude Code prompt library
-- Style guides
-- Workflow documentation
-- Learning resources
+- 此仓库的文档
+- Claude Code 提示库
+- 风格指南
+- 工作流程文档
+- 学习资源
 
 ### Templates
-- Project templates
-- Daily note templates
-- Meeting templates
-- Research templates
-- Review templates
+- 项目模板
+- 每日笔记模板
+- 会议模板
+- 研究模板
+- 审查模板
 
 ### Agents
-- Thinking partner instructions
-- Research assistant config
-- Editor agent setup
-- Custom agent definitions
+- 思考伙伴说明
+- 研究助手配置
+- 编辑代理设置
+- 自定义代理定义
 
 ### Workflows
-- Weekly review process
-- Project completion checklist
-- Inbox processing guide
-- Archive procedures
+- 每周审查流程
+- 项目完成检查清单
+- 收件箱处理指南
+- 归档程序
 
-## Using Templates
+## 使用模板
 
-### Manual
-1. Copy template content
-2. Create new note
-3. Paste and fill in
+### 手动
+1. 复制模板内容
+2. 创建新笔记
+3. 粘贴并填写
 
-### With Claude Code
+### 使用 Claude Code
 ```
-Create a new project using the project template.
-Name it [Project Name] and put it in 01_Projects.
+使用项目模板创建一个新项目。
+将其命名为 [项目名称] 并放在 01_Projects 中。
 ```
 
-## Creating Custom Agents
+## 创建自定义代理
 
-Save agent instructions as markdown files:
+将代理说明保存为 markdown 文件:
 
 ```markdown
-# Agent: [Name]
+# 代理: [名称]
 
-You are a [role description].
+你是一个 [角色描述]。
 
-## Core Behaviors
-- Behavior 1
-- Behavior 2
+## 核心行为
+- 行为 1
+- 行为 2
 
-## Workflow
-1. Step 1
-2. Step 2
+## 工作流程
+1. 步骤 1
+2. 步骤 2
 
-## Constraints
-- Don't do X
-- Always do Y
+## 约束
+- 不要做 X
+- 始终做 Y
 ```
 
-Then reference in Claude Code:
+然后在 Claude Code 中引用:
 ```
-Use the instructions in 06_Metadata/Agents/[agent].md
-and help me with [task].
-```
-
-## Claude Code Prompts
-
-### Template Usage
-```
-Show me available templates in 06_Metadata/Templates.
-Create a new [type] note using the appropriate template.
+使用 06_Metadata/Agents/[agent].md 中的说明
+并帮助我 [任务]。
 ```
 
-### Documentation
-```
-Check 06_Metadata/Reference for documentation on [topic].
-Update the guide based on what we just learned.
-```
+## Claude Code 提示
 
-### Workflow Execution
+### 模板使用
 ```
-Run the weekly review workflow from 06_Metadata/Workflows.
-Guide me through each step.
+显示 06_Metadata/Templates 中的可用模板。
+使用适当的模板创建一个新的 [类型] 笔记。
 ```
 
-## Maintenance
+### 文档
+```
+检查 06_Metadata/Reference 中关于 [主题] 的文档。
+根据我们刚刚学到的内容更新指南。
+```
 
-### Regular Updates
-- Update templates based on usage
-- Document new workflows as they emerge
-- Archive outdated configurations
-- Keep reference docs current
+### 工作流程执行
+```
+从 06_Metadata/Workflows 运行每周审查工作流程。
+引导我完成每个步骤。
+```
 
-### Version Control
-- Track changes to workflows
-- Document why changes were made
-- Keep archive of old versions
-- Date major updates
+## 维护
 
-## Best Practices
+### 定期更新
+- 根据使用情况更新模板
+- 记录新出现的工作流程
+- 归档过时的配置
+- 保持参考文档最新
 
-- **Document as you go** - Capture workflows while fresh
-- **Iterate templates** - Improve based on usage
-- **Share configurations** - What works for you might help others
-- **Keep it simple** - Complex systems break
-- **Date everything** - Context matters
+### 版本控制
+- 跟踪工作流程的更改
+- 记录为什么进行更改
+- 保留旧版本的存档
+- 为主要更新添加日期
 
-## Remember
+## 最佳实践
 
-Metadata is the operating system of your vault. Good metadata means consistent structure, repeatable workflows, and scalable growth. This is where you document not just what you know, but how you work.
+- **边做边记录** - 在新鲜时捕获工作流程
+- **迭代模板** - 根据使用情况改进
+- **分享配置** - 对你有效的东西可能帮助他人
+- **保持简单** - 复杂的系统会崩溃
+- **一切加日期** - 背景很重要
+
+## 记住
+
+元数据是你仓库的操作系统。好的元数据意味着一致的结构、可重复的工作流程和可扩展的增长。这里你不仅记录你知道什么,还记录你如何工作。

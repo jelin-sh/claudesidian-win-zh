@@ -1,76 +1,76 @@
-# Daily Review
+# 每日回顾
 
-Conduct an end-of-day review to capture progress and set up tomorrow.
+进行每日回顾以捕获进展并为明天做准备。
 
-## Review Process
+## 回顾流程
 
-1. **Today's Activity**
-   - Find all notes modified today
-   - Identify new notes created
-   - Review work across all projects
+1. **今天的活动**
+   - 查找今天修改的所有笔记
+   - 识别创建的新笔记
+   - 审查所有项目的工作
 
-2. **Progress Assessment**
-   - What was accomplished?
-   - What got stuck or blocked?
-   - What unexpected discoveries emerged?
+2. **进展评估**
+   - 完成了什么?
+   - 什么被卡住或阻塞了?
+   - 出现了什么意外的发现?
 
-3. **Capture Insights**
-   - Key learnings from today
-   - New connections discovered
-   - Questions that arose
+3. **捕获洞察**
+   - 今天的关键学习
+   - 发现的新联系
+   - 出现的问题
 
-4. **Tomorrow's Setup**
-   - Top 3 priorities
-   - Open loops to close
-   - Questions to explore
+4. **明天的设置**
+   - 前 3 个优先事项
+   - 要关闭的未闭环
+   - 要探索的问题
 
-## Output Format
+## 输出格式
 
-Create or update a daily note with:
+创建或更新每日笔记,包含:
 
 ```markdown
-# Daily Review - [Date]
+# 每日回顾 - [日期]
 
-## Accomplished
+## 已完成
 
-- ✓ [Completed item 1]
-- ✓ [Completed item 2]
+- ✓ [已完成项目 1]
+- ✓ [已完成项目 2]
 
-## Progress Made
+## 取得的进展
 
-- [Project/Area]: [What moved forward]
-- [Project/Area]: [What moved forward]
+- [项目/领域]: [什么进展了]
+- [项目/领域]: [什么进展了]
 
-## Insights
+## 洞察
 
-- [Key realization or connection]
-- [Important learning]
+- [关键认识或联系]
+- [重要学习]
 
-## Blocked/Stuck
+## 被阻塞/卡住
 
-- [What didn't progress and why]
+- [什么没有进展以及为什么]
 
-## Discovered Questions
+## 发现的问题
 
-- [New question that emerged]
-- [Thing to research]
+- [出现的新问题]
+- [要研究的事情]
 
-## Tomorrow's Focus
+## 明天的重点
 
-1. [Priority 1]
-2. [Priority 2]
-3. [Priority 3]
+1. [优先事项 1]
+2. [优先事项 2]
+3. [优先事项 3]
 
-## Open Loops
+## 未闭环
 
-- [ ] [Thing to remember]
-- [ ] [Person to follow up with]
-- [ ] [Idea to develop]
+- [ ] [要记住的事情]
+- [ ] [要跟进的人]
+- [ ] [要发展的想法]
 ```
 
-## Additional Actions
+## 附加操作
 
-- Move completed project tasks to archive
-- Update project status notes
-- Link related discoveries
-- Flag items needing attention
+- 将已完成的项目任务移至归档
+- 更新项目状态笔记
+- 链接相关的发现
+- 标记需要注意的项目

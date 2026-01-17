@@ -1,106 +1,106 @@
-# Claude Code Commands
+# Claude Code 命令
 
-Pre-configured commands to enhance your Claude Code + Obsidian workflow.
+预配置的命令,增强你的 Claude Code + Obsidian 工作流程。
 
-## Available Commands
+## 可用命令
 
-### 🤔 thinking-partner
+### 🤔 thinking-partner (思考伙伴)
 
-Engage Claude as a thinking partner for exploring complex problems.
+让 Claude 作为思考伙伴来探索复杂问题。
 
 ```
 /thinking-partner
 ```
 
-Best for: Brainstorming, problem exploration, developing ideas
+最适用于: 头脑风暴、问题探索、发展想法
 
-### 📥 inbox-processor
+### 📥 inbox-processor (收件箱处理器)
 
-Process and organize items in your Inbox folder.
+处理和组织你的收件箱文件夹中的项目。
 
 ```
 /inbox-processor
 ```
 
-Best for: Weekly inbox cleanup, organizing captures
+最适用于: 每周收件箱清理、组织捕获的内容
 
-### 🔍 research-assistant
+### 🔍 research-assistant (研究助手)
 
-Conduct thorough research on any topic using your vault.
+使用你的仓库对任何主题进行彻底研究。
 
 ```
 /research-assistant
 ```
 
-Best for: Deep dives, literature reviews, knowledge synthesis
+最适用于: 深入探讨、文献综述、知识综合
 
-### 📅 daily-review
+### 📅 daily-review (每日回顾)
 
-End-of-day review to capture progress and plan tomorrow.
+每日结束时回顾进展并计划明天。
 
 ```
 /daily-review
 ```
 
-Best for: Daily shutdown ritual, reflection
+最适用于: 每日关闭仪式、反思
 
-### 📊 weekly-synthesis
+### 📊 weekly-synthesis (每周综合)
 
-Create a comprehensive synthesis of the week's work.
+创建一周工作的全面综合。
 
 ```
 /weekly-synthesis
 ```
 
-Best for: Weekly reviews, pattern recognition
+最适用于: 每周审查、模式识别
 
-## Creating Custom Commands
+## 创建自定义命令
 
-1. Create a new `.md` file in this directory
-2. Name it descriptively (kebab-case)
-3. Structure it with:
-   - Clear role definition
-   - Specific process steps
-   - Expected output format
-   - Tips and constraints
+1. 在此目录中创建新的 `.md` 文件
+2. 用描述性名称命名(kebab-case)
+3. 使用以下结构:
+   - 明确的角色定义
+   - 具体的流程步骤
+   - 预期的输出格式
+   - 提示和约束
 
-## Using Commands
+## 使用命令
 
-### Method 1: Direct (in Claude Code)
-
-```
-/[command-name]
-```
-
-### Method 2: Reference in Chat
+### 方法 1: 直接(在 Claude Code 中)
 
 ```
-Use the thinking-partner command to help me explore [topic]
+/[命令名称]
 ```
 
-### Method 3: Manual
+### 方法 2: 在聊天中引用
 
 ```
-Follow the instructions in .claude/commands/[command].md
+使用 thinking-partner 命令帮助我探索 [主题]
 ```
 
-## Tips
+### 方法 3: 手动
 
-- Commands are just structured prompts
-- Modify them based on your needs
-- Combine commands for complex workflows
-- Share your custom commands with the community
+```
+遵循 .claude/commands/[command].md 中的说明
+```
 
-## Command Ideas
+## 提示
 
-Consider creating commands for:
+- 命令只是结构化的提示
+- 根据你的需求修改它们
+- 结合命令完成复杂工作流程
+- 与社区分享你的自定义命令
 
-- Project retrospectives
-- Meeting notes processing
-- Book notes extraction
-- Idea development
-- Content planning
-- Learning path creation
-- Decision analysis
+## 命令创意
 
-Remember: The best commands emerge from your actual workflows.
+考虑为以下内容创建命令:
+
+- 项目回顾
+- 会议笔记处理
+- 书籍笔记提取
+- 想法发展
+- 内容规划
+- 学习路径创建
+- 决策分析
+
+记住: 最好的命令从你的实际工作流程中出现。
