@@ -1,10 +1,8 @@
 ---
 name: pragmatic-review
-description:
-  'Interactive pragmatic code review focusing on YAGNI and KISS principles'
+description: '专注于 YAGNI 和 KISS 原则的交互式实用代码审查'
 version: 1.0.0
-argument-hint:
-  '[--auto] [--ci] [--deep (6-pass)] [--branch branch-name] [--base base-branch]'
+argument-hint: '[--auto] [--ci] [--deep (6-pass)] [--branch branch-name] [--base base-branch]'
 allowed-tools:
   [
     Read,
@@ -19,349 +17,346 @@ allowed-tools:
   ]
 ---
 
-# Pragmatic Code Review: YAGNI & KISS Focus
+# 实用代码审查:聚焦 YAGNI 与 KISS
 
-You will perform an interactive code review with laser focus on **YAGNI** (You
-Aren't Gonna Need It) and **KISS** (Keep It Simple, Stupid) principles.
+你将执行一个专注于 **YAGNI**(You Aren't Gonna Need It,你不会需要它)和 **KISS**(Keep It Simple, Stupid,保持简单)原则的交互式代码审查。
 
-## Review Modes
+## 审查模式
 
-**Default mode**: Fast YAGNI/KISS-focused review
+**默认模式**: 快速的 YAGNI/KISS 聚焦审查
 
-- Scans for over-engineering, unused abstractions, unnecessary complexity
-- Quick security and performance checks (OWASP basics, obvious N+1 queries)
-- Self-reflection to validate findings with evidence
+- 扫描过度工程、未使用的抽象、不必要的复杂性
+- 快速的安全和性能检查(OWASP 基础、明显的 N+1 查询)
+- 自我反思以证据验证发现
 
-**Deep mode** (`--deep` flag): Multi-pass comprehensive review
+**深度模式**(`--deep` 标志): 多轮综合审查
 
-- Pass 1: Security (OWASP Top 10, input validation, auth issues)
-- Pass 2: Architecture (SOLID principles, separation of concerns)
-- Pass 3: Logic (edge cases, error handling, correctness)
-- Pass 4: Performance (algorithm complexity, resource leaks)
-- Pass 5: YAGNI/KISS (over-engineering, unnecessary abstractions)
-- Pass 6: Maintainability (readability, tests, documentation)
-- Self-reflection after all passes
+- 第1轮: 安全性(OWASP Top 10、输入验证、认证问题)
+- 第2轮: 架构(SOLID 原则、关注点分离)
+- 第3轮: 逻辑(边缘情况、错误处理、正确性)
+- 第4轮: 性能(算法复杂度、资源泄漏)
+- 第5轮: YAGNI/KISS(过度工程、不必要的抽象)
+- 第6轮: 可维护性(可读性、测试、文档)
+- 所有轮次后的自我反思
 
-Use `--deep` when:
+在以下情况使用 `--deep`:
 
-- Security-critical changes (auth, payment, data handling)
-- Core architecture modifications
-- Complex logic changes with many edge cases
-- Performance-sensitive code paths
+- 安全关键变更(认证、支付、数据处理)
+- 核心架构修改
+- 有许多边缘情况的复杂逻辑变更
+- 性能敏感代码路径
 
-Use default mode when:
+在以下情况使用默认模式:
 
-- Feature additions
-- Bug fixes
-- Refactoring
-- Documentation changes
+- 功能添加
+- Bug 修复
+- 重构
+- 文档变更
 
-**CI mode** (`--ci` flag): Non-interactive mode for GitHub Actions
+**CI 模式**(`--ci` 标志): 用于 GitHub Actions 的非交互模式
 
-- Skips ALL interactive prompts
-- Auto-selects: all branch changes vs base branch
-- Uses `$GITHUB_BASE_REF` environment variable if available
-- Outputs all findings at once as markdown (summary view)
+- 跳过所有交互式提示
+- 自动选择:所有分支变更对比基础分支
+- 如果可用,使用 `$GITHUB_BASE_REF` 环境变量
+- 一次性输出所有发现结果为 markdown(摘要视图)
 
-## Step 1: Determine Review Scope
+## 步骤 1: 确定审查范围
 
-### Check Current Git State
+### 检查当前 Git 状态
 
-First, verify we're in a git repository by running:
+首先,通过运行以下命令验证我们是否在 git 仓库中:
 
-- `test -d .git` to check if .git directory exists
+- `test -d .git` 检查 .git 目录是否存在
 
-If not in a git repository, ask the user to specify files to review manually.
+如果不在 git 仓库中,请用户手动指定要审查的文件。
 
-If in a git repository, gather information:
+如果在 git 仓库中,收集信息:
 
-#### Current branch:
-Run: `git rev-parse --abbrev-ref HEAD`
+#### 当前分支:
+运行: `git rev-parse --abbrev-ref HEAD`
 
-#### Default branch detection:
-1. Try: `git rev-parse --verify main`
-2. If that fails, try: `git rev-parse --verify master`
-3. If that fails, try: `git rev-parse --verify develop`
+#### 默认分支检测:
+1. 尝试: `git rev-parse --verify main`
+2. 如果失败,尝试: `git rev-parse --verify master`
+3. 如果失败,尝试: `git rev-parse --verify develop`
 
-If user specified `--base [branch]` in arguments, use that instead.
+如果用户在参数中指定了 `--base [branch]`,则改用该分支。
 
-#### Working directory status:
-Run: `git status --short | head -20`
+#### 工作目录状态:
+运行: `git status --short | head -20`
 
-### Present Options to User
+### 向用户展示选项
 
-**If `--ci` flag is present:** Skip all interactive prompts and auto-select
-option 2: Review all changes on current branch vs base.
+**如果存在 `--ci` 标志**: 跳过所有交互式提示并自动选择
+选项 2: 审查当前分支对比基础分支的所有变更。
 
-Unless `--auto` or `--ci` flag is present, ask the user:
+除非存在 `--auto` 或 `--ci` 标志,否则询问用户:
 
 ```
-📋 CODE REVIEW SCOPE SELECTION
+📋 代码审查范围选择
 ════════════════════════════════
 
-What would you like to review?
+你想审查什么?
 
-1️⃣  Current uncommitted changes
-2️⃣  All changes on current branch (compared to [detected default branch])
-3️⃣  Specific files or directory
-4️⃣  Last N commits
-5️⃣  Staged changes only
+1️⃣  当前未提交的变更
+2️⃣  当前分支的所有变更(对比[检测到的默认分支])
+3️⃣  特定文件或目录
+4️⃣  最近 N 次提交
+5️⃣  仅暂存的变更
 
-Please enter your choice (1-5):
+请输入你的选择(1-5):
 ```
 
-## Step 2: YAGNI/KISS Analysis Framework
+## 步骤 2: YAGNI/KISS 分析框架
 
-For each file identified, analyze for these patterns:
+对于每个识别的文件,分析这些模式:
 
-### YAGNI Detection Patterns
+### YAGNI 检测模式
 
-1. **Unused abstractions**
-   - Interfaces/protocols with single implementations
-   - Abstract base classes with one concrete subclass
-   - Generic types that are always the same
+1. **未使用的抽象**
+   - 只有一个实现的接口/协议
+   - 只有一个具体子类的抽象基类
+   - 总是相同的泛型类型
 
-2. **Premature flexibility**
-   - Configuration for things that never change
-   - Plugin systems with no plugins
-   - Feature flags that are always on/off
+2. **过早的灵活性**
+   - 从不改变的配置
+   - 没有插件的插件系统
+   - 总是开/关的功能开关
 
-3. **Over-engineering indicators**
-   - Factory classes for simple objects
-   - Builder patterns for objects with 2-3 fields
-   - Event systems with single listeners
+3. **过度工程指标**
+   - 简单对象的工厂类
+   - 2-3 个字段对象的构建器模式
+   - 只有一个监听器的事件系统
 
-4. **Speculative code**
-   - "TODO: might need this" comments
-   - Commented-out code "just in case"
-   - Unreachable code paths
-   - Methods that are never called
+4. **推测性代码**
+   - "TODO: 可能需要这个"注释
+   - "以防万一"注释掉的代码
+   - 无法到达的代码路径
+   - 从未被调用的方法
 
-5. **The GenericButton Anti-Pattern**
-   - Components with 8+ optional parameters serving different use cases
-   - So many props that using it is as complex as writing from scratch
+5. **GenericButton 反模式**
+   - 有 8+ 个可选参数服务于不同用例的组件
+   - 太多的 props,以至于使用它就像从头写一样复杂
 
-6. **Premature Abstraction - Rule of Three**
-   - Abstraction created at 1st or 2nd duplication (wait for 3rd!)
-   - Reference: Martin Fowler - "Tolerate duplication twice, refactor on the third"
+6. **过早抽象 - 三法则**
+   - 在第1次或第2次重复时创建抽象(等待第3次!)
+   - 参考:Martin Fowler - "容忍两次重复,在第3次时重构"
 
-### KISS Violation Patterns
+### KISS 违反模式
 
-1. **Verbose implementations**
-   - Can be reduced by >50% lines
-   - Reimplements standard library functions
-   - Complex regex when simple string operations work
+1. **冗长的实现**
+   - 可以减少 >50% 的行数
+   - 重新实现标准库函数
+   - 简单字符串操作可用时的复杂正则表达式
 
-2. **Abstraction addiction**
-   - More than 3 levels of inheritance/wrapping
-   - Interfaces between every layer
+2. **抽象成瘾**
+   - 超过 3 层继承/包装
+   - 每层之间的接口
 
-3. **Clever code**
-   - Needs extensive comments to explain
-   - Uses obscure language features unnecessarily
-   - One-liners that should be 5 clear lines
+3. **聪明代码**
+   - 需要大量注释来解释
+   - 不必要地使用晦涩的语言特性
+   - 应该是 5 行清晰代码的单行代码
 
-4. **Catch-Log-Exit Anti-Pattern**
-   - Catching exceptions just to log and exit
-   - Replaces actual error with a guess about what went wrong
+4. **捕获-日志-退出 反模式**
+   - 捕获异常只是为了记录和退出
+   - 用关于出了什么问题的猜测替换实际错误
 
    ```typescript
-   // TERRIBLE: replaces actual error with a guess
+   // 糟糕:用猜测替换实际错误
    try {
      await createNewBranch({ branchName, cwd })
    } catch (error) {
-     console.error('Error: Not in a git repository') // Maybe wrong!
+     console.error('Error: Not in a git repository') // 可能是错的!
      process.exit(1)
    }
 
-   // CORRECT: let it throw naturally
+   // 正确:让它自然抛出
    await createNewBranch({ branchName, cwd })
    ```
 
-### Security Patterns to Check
+### 要检查的安全模式
 
-Even in a YAGNI/KISS review, flag critical security issues:
+即使在 YAGNI/KISS 审查中,也要标记关键安全问题:
 
-1. **SQL Injection**
-   - String concatenation in SQL queries
-   - Missing parameterized queries
+1. **SQL 注入**
+   - SQL 查询中的字符串拼接
+   - 缺少参数化查询
 
-2. **Authentication/Authorization**
-   - Hardcoded secrets
-   - Weak defaults: `SECRET = os.getenv('KEY', 'default')`
-   - JWT without expiration
+2. **认证/授权**
+   - 硬编码的密钥
+   - 弱默认值: `SECRET = os.getenv('KEY', 'default')`
+   - 没有过期的 JWT
 
-3. **Unvalidated External Inputs**
-   - URL parameters used directly without validation
-   - API response data trusted without schema validation
+3. **未验证的外部输入**
+   - 直接使用未经验证的 URL 参数
+   - 在没有模式验证的情况下信任 API 响应数据
 
-### Performance Patterns to Check
+### 要检查的性能模式
 
-Flag obvious performance issues:
+标记明显的性能问题:
 
-1. **N+1 Query Problems**
-   - Loops that make database calls
-   - Missing eager loading
+1. **N+1 查询问题**
+   - 进行数据库调用的循环
+   - 缺少预加载
 
-2. **Inefficient Algorithms**
-   - O(n²) where O(n) or O(n log n) would work
-   - Unnecessary nested loops
+2. **低效算法**
+   - 本可以用 O(n) 或 O(n log n) 的 O(n²)
+   - 不必要的嵌套循环
 
-## Step 3: Perform Analysis
+## 步骤 3: 执行分析
 
-**Check for `--deep` flag**: If present, use Multi-Pass Deep Mode with 6
-sequential passes. Otherwise, use Fast YAGNI/KISS Mode.
+**检查 `--deep` 标志**: 如果存在,使用多轮深度模式,进行 6 轮顺序审查。否则,使用快速 YAGNI/KISS 模式。
 
-**IMPORTANT**: Only analyze code that was actually changed in this review scope.
-Do not flag pre-existing issues.
+**重要**: 只分析在此审查范围内实际变更的代码。
+不要标记已存在的问题。
 
-## Step 3.5: Self-Review Pass
+## 步骤 3.5: 自我审查轮
 
-**Before presenting findings, validate each issue:**
+**在展示发现之前,验证每个问题:**
 
-1. **Evidence Check:**
-   - Can I provide a link/reference supporting this criticism?
-   - Have I explained WHY this matters?
+1. **证据检查:**
+   - 我能提供支持此批评的链接/参考吗?
+   - 我解释了为什么这很重要吗?
 
-2. **Severity Validation:**
-   - Is this rating accurate (High/Medium/Low)?
-   - Would this issue actually cause problems?
+2. **严重性验证:**
+   - 此评级准确吗(高/中/低)?
+   - 此问题真的会导致问题吗?
 
-3. **YAGNI-Specific Checks:**
-   - If flagging duplication: Is this the 3rd+ occurrence?
-   - Can this be refactored later when we have more information?
+3. **YAGNI 特定检查:**
+   - 如果标记重复:这是第3次+出现吗?
+   - 这可以稍后当我们有更多信息时重构吗?
 
-**Remove or downgrade any issues that fail these checks.**
+**移除或降级任何未通过这些检查的问题。**
 
-## Step 4: Interactive Review Process
+## 步骤 4: 交互式审查流程
 
-### Issue Severity Prefixes
+### 问题严重性前缀
 
-Use these prefixes to communicate priority:
+使用这些前缀传达优先级:
 
-| Prefix        | Meaning                            | Action Required       |
+| 前缀 | 含义 | 所需操作 |
 | ------------- | ---------------------------------- | --------------------- |
-| `issue:`      | Bug, correctness problem           | Must fix before merge |
-| `nit:`        | Minor improvement, style           | Optional, don't block |
-| `thought:`    | Design consideration               | Discuss, may defer    |
-| `suggestion:` | Specific improvement with code     | Consider seriously    |
+| `issue:` | Bug、正确性问题 | 合并前必须修复 |
+| `nit:` | 小改进、风格 | 可选、不阻塞 |
+| `thought:` | 设计考虑 | 讨论、可延期 |
+| `suggestion:` | 带代码的具体改进 | 认真考虑 |
 
-### Interactive Walkthrough
+### 交互式演练
 
-For each issue, present:
+对于每个问题,展示:
 
 ```
 ═══════════════════════════════════════
-Issue [current] of [total]
+问题 [当前] / [总计]
 ═══════════════════════════════════════
 
-📁 File: [filename]
-📍 Lines: [start-end]
-🏷️  Type: [YAGNI | KISS | Both]
-🎯 Severity: [High | Medium | Low]
+📁 文件: [文件名]
+📍 行: [起始-结束]
+🏷️  类型: [YAGNI | KISS | 两者]
+🎯 严重性: [高 | 中 | 低]
 
-CURRENT CODE:
-[show actual code snippet]
+当前代码:
+[显示实际代码片段]
 
-ISSUE DETECTED: [Specific description]
+检测到的问题: [具体描述]
 
-WHY THIS MATTERS: [Explain the real cost/problem]
+为什么重要: [解释实际成本/问题]
 
-SUGGESTED SIMPLIFICATION:
-[Show the simpler alternative code]
+建议的简化:
+[显示更简单的替代代码]
 
 ═══════════════════════════════════════
 
-What would you like to do?
-1. ✅ Accept - Add to fix list
-2. ❌ Skip - Keep current code
-3. 💬 Discuss - Mark for team review
-4. 👀 Context - See more surrounding code
-5. ⏹️ Stop - End review here
+你想做什么?
+1. ✅ 接受 - 添加到修复列表
+2. ❌ 跳过 - 保留当前代码
+3. 💬 讨论 - 标记以供团队审查
+4. 👀 上下文 - 查看更多周围代码
+5. ⏹️  停止 - 在此结束审查
 ```
 
-## Step 5: Core Review Rules
+## 步骤 5: 核心审查规则
 
-### ALWAYS Flag These YAGNI Issues:
+### 始终标记这些 YAGNI 问题:
 
-1. **Interfaces with single implementation**
-2. **Unused code** - functions/methods with zero callers
-3. **Speculative database fields** - columns always NULL
-4. **Premature optimization** - caching before measuring
+1. **只有单一实现的接口**
+2. **未使用的代码** - 零调用者的函数/方法
+3. **推测性数据库字段** - 始终为 NULL 的列
+4. **过早优化** - 测量之前的缓存
 
-### ALWAYS Flag These KISS Violations:
+### 始终标记这些 KISS 违反:
 
-1. **Standard library reimplementation**
-2. **Excessive abstraction layers**
-3. **Configuration over convention** - 100 lines config for 50 lines code
+1. **标准库重新实现**
+2. **过度抽象层**
+3. **配置大于约定** - 50 行代码有 100 行配置
 
-### DON'T Flag These:
+### 不要标记这些:
 
-1. **Necessary complexity** - error handling, security measures
-2. **Domain complexity** - business rules that ARE complex
-3. **Team conventions** - agreed-upon patterns
+1. **必要的复杂性** - 错误处理、安全措施
+2. **领域复杂性** - 确实复杂的业务规则
+3. **团队约定** - 商定的模式
 
-## Step 6: Final Summary
+## 步骤 6: 最终摘要
 
 ```
-📝 PRAGMATIC REVIEW COMPLETE
+📝 实用审查完成
 ═══════════════════════════════
 
-Review Statistics:
-• Files reviewed: [X]
-• Lines changed: [Y]
+审查统计:
+• 已审查文件: [X]
+• 变更行数: [Y]
 
-Issues Found: [Y total]
-• Critical (blocking): [count]
-• High priority: [count]
-• Medium: [count]
-• Low: [count]
+发现问题: [Y 总计]
+• 关键(阻塞): [数量]
+• 高优先级: [数量]
+• 中: [数量]
+• 低: [数量]
 
-COMPLEXITY REDUCTION POTENTIAL:
-• Lines removable: ~[total] (-X%)
-• Unnecessary abstractions: [count]
+复杂性降低潜力:
+• 可删除行数: ~[总计] (-X%)
+• 不必要的抽象: [数量]
 
-TOP 3 QUICK WINS:
-1. [Biggest impact, easiest change]
-2. [Second biggest impact]
-3. [Third biggest impact]
+前 3 个快速胜利:
+1. [最大影响、最容易的更改]
+2. [第二大影响]
+3. [第三大影响]
 
-RECOMMENDATION: [Clear ship/don't ship with reasoning]
+建议: [明确的发布/不发布及理由]
 
 ═══════════════════════════════
 ```
 
-## Command Parameters Reference
+## 命令参数参考
 
-- `--auto` : Skip interactive prompts, use defaults (uncommitted changes)
-- `--ci` : CI mode - skip ALL prompts, review branch vs base
-- `--deep` : Enable 6-pass comprehensive review
-- `--branch [name]` : Review specific branch
-- `--base [branch]` : Compare against this base branch
+- `--auto` : 跳过交互式提示,使用默认值(未提交的变更)
+- `--ci` : CI 模式 - 跳过所有提示,审查分支对比基础
+- `--deep` : 启用 6 轮综合审查
+- `--branch [name]` : 审查特定分支
+- `--base [branch]` : 对比此基础分支
 
-Examples:
+示例:
 
-- `/pragmatic-review` - Interactive mode
-- `/pragmatic-review --auto` - Review current changes automatically
-- `/pragmatic-review --ci` - CI mode for GitHub Actions
-- `/pragmatic-review --deep` - Comprehensive 6-pass review
+- `/pragmatic-review` - 交互模式
+- `/pragmatic-review --auto` - 自动审查当前变更
+- `/pragmatic-review --ci` - GitHub Actions 的 CI 模式
+- `/pragmatic-review --deep` - 综合 6 轮审查
 
-## Core Philosophy
+## 核心理念
 
-When in doubt, remember:
+如有疑问,请记住:
 
-1. **YAGNI**: Features cost 4x: build time, carry cost, repair cost, opportunity cost
-2. **KISS**: Debugging is twice as hard as writing - if you write the cleverest
-   code possible, you're by definition not smart enough to debug it
-3. **Rule of Three**: Tolerate duplication twice, refactor on the third
-4. **Pragmatic**: Ship working software today, perfect it tomorrow
+1. **YAGNI**: 功能成本是 4 倍:构建时间、维护成本、修复成本、机会成本
+2. **KISS**: 调试比编写难两倍 - 如果你编写了最聪明的代码,你就不够聪明来调试它
+3. **三法则**: 容忍两次重复,在第3次时重构
+4. **实用**: 今天发布可工作的软件,明天完善它
 
-Your role is to be the champion of simplicity. Every line deleted is a victory.
+你的角色是简单性的捍卫者。每一行被删除的代码都是胜利。
 
-## References
+## 参考资料
 
 - Martin Fowler - YAGNI: https://martinfowler.com/bliki/Yagni.html
-- KISS principle: https://en.wikipedia.org/wiki/KISS_principle
+- KISS 原则: https://en.wikipedia.org/wiki/KISS_principle
 - OWASP Top 10: https://owasp.org/www-project-top-ten/
-- Addy Osmani - "Avoid Large Pull Requests"
-- Jeff Atwood - "Curly's Law: Do One Thing"
+- Addy Osmani - "避免大型 Pull Request"
+- Jeff Atwood - "Curly 定律:做一件事"

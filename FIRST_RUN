@@ -1,6 +1,6 @@
-# First Run Marker
+# 首次运行标记
 
-This file indicates that init-bootstrap has not been run yet.
-It will be automatically removed after successful setup.
+此文件表示 init-bootstrap 尚未运行。
+设置成功后将自动删除此文件。
 
-Please run: /init-bootstrap
+请运行: /init-bootstrap

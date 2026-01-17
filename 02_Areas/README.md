@@ -1,136 +1,136 @@
-# 🔄 Areas
+# 🔄 领域
 
-Ongoing responsibilities and spheres of activity you maintain over time.
+你长期维护的持续职责和活动范围。
 
-## Purpose
+## 目的
 
-Areas are **ongoing responsibilities** that:
-- Have no end date
-- Require continuous attention
-- Define your roles and commitments
-- Need regular maintenance
+领域是**持续职责**,它们:
+- 没有结束日期
+- 需要持续关注
+- 定义你的角色和承诺
+- 需要定期维护
 
-## What Belongs Here
+## 什么属于这里
 
-### Personal Areas
-- Health & Fitness
-- Finances
-- Relationships
-- Personal Development
-- Home & Environment
+### 个人领域
+- 健康与健身
+- 财务
+- 关系
+- 个人发展
+- 家庭与环境
 
-### Professional Areas
-- Team Management
-- Client Relationships
-- Professional Skills
-- Industry Knowledge
-- Networking
+### 职业领域
+- 团队管理
+- 客户关系
+- 职业技能
+- 行业知识
+- 人脉网络
 
-### Creative Areas
-- Writing Practice
-- Content Creation
-- Learning & Research
-- Side Projects
+### 创作领域
+- 写作练习
+- 内容创作
+- 学习与研究
+- 副业项目
 
-## Area Structure
+## 领域结构
 
-Each area might contain:
+每个领域可能包含:
 ```
-Area_Name/
-├── README.md          # Overview and principles
-├── Goals/            # Current focus areas
-├── Resources/        # Reference materials
-├── Reviews/          # Periodic check-ins
-└── Ideas/           # Future possibilities
-```
-
-## Claude Code Workflows
-
-### Area Review
-```
-Review my [area name] area.
-What patterns do you see in recent notes?
-What aspects need more attention?
+领域名称/
+├── README.md          # 概览和原则
+├── Goals/            # 当前关注领域
+├── Resources/        # 参考资料
+├── Reviews/          # 定期检查
+└── Ideas/           # 未来可能性
 ```
 
-### Setting Goals
+## Claude Code 工作流程
+
+### 领域审查
 ```
-Help me set quarterly goals for [area].
-Based on recent activity, what should I prioritize?
+审查我的 [领域名称] 领域。
+你在最近的笔记中看到了什么模式?
+哪些方面需要更多关注?
 ```
 
-### Finding Gaps
+### 设定目标
 ```
-Analyze my [area] notes.
-What important topics am I not tracking?
-What questions should I be asking?
-```
-
-### Cross-Area Analysis
-```
-Compare my [Area A] and [Area B] notes.
-Where do they overlap?
-How might they inform each other?
+帮助我为 [领域] 设定季度目标。
+基于最近的活动,我应该优先考虑什么?
 ```
 
-## Area vs Project
+### 发现差距
+```
+分析我的 [领域] 笔记。
+有哪些重要主题我没有追踪?
+我应该问什么问题?
+```
 
-**Ask yourself**: Does this have an end date?
+### 跨领域分析
+```
+比较我的 [领域 A] 和 [领域 B] 笔记。
+它们在哪里重叠?
+它们如何相互影响?
+```
 
-| Area (Ongoing) | Project (Time-bound) |
+## 领域 vs 项目
+
+**问自己**: 这有结束日期吗?
+
+| 领域 (持续) | 项目 (有时间限制) |
 |---------------|---------------------|
-| "Health" | "Lose 10 pounds by June" |
-| "Finances" | "Create 2024 budget" |
-| "Writing" | "Finish blog post series" |
-| "Learning" | "Complete Python course" |
-| "Clients" | "Deliver Project X" |
+| "健康" | "6 月前减 10 磅" |
+| "财务" | "创建 2024 预算" |
+| "写作" | "完成博客文章系列" |
+| "学习" | "完成 Python 课程" |
+| "客户" | "交付项目 X" |
 
-## Maintenance Practices
+## 维护实践
 
-### Weekly
-- Quick scan of each area
-- Note any urgent needs
-- Capture new ideas
+### 每周
+- 快速扫描每个领域
+- 记录任何紧急需求
+- 捕获新想法
 
-### Monthly
-- Review goals and progress
-- Update resource lists
-- Clean up old notes
+### 每月
+- 审查目标和进展
+- 更新资源列表
+- 清理旧笔记
 
-### Quarterly
-- Deep review with Claude Code
-- Adjust focus areas
-- Archive outdated material
+### 每季度
+- 与 Claude Code 深度审查
+- 调整关注领域
+- 归档过时材料
 
-## Claude Code Prompts
+## Claude Code 提示
 
-### Health Check
+### 健康检查
 ```
-Do a health check on all my areas.
-Which have recent activity?
-Which have been neglected?
-```
-
-### Balance Assessment
-```
-Looking at my areas, where am I spending most energy?
-What's out of balance?
+对我所有领域进行健康检查。
+哪些最近有活动?
+哪些被忽视了?
 ```
 
-### Integration Opportunities
+### 平衡评估
 ```
-Find connections between my different areas.
-Where could better integration create value?
+看看我的领域,我大部分精力花在哪里?
+什么不平衡?
 ```
 
-## Tips
+### 整合机会
+```
+在我的不同领域之间寻找联系。
+哪里更好的整合可以创造价值?
+```
 
-- **Areas inform Projects** - Projects often emerge from area needs
-- **Keep them active** - Dead areas should be archived
-- **Review regularly** - Areas drift without attention
-- **Document standards** - What does "good" look like?
-- **Track metrics** - Even qualitative areas benefit from measurement
+## 提示
 
-## Remember
+- **领域指导项目** - 项目通常从领域需求中出现
+- **保持活跃** - 死去的领域应该归档
+- **定期审查** - 领域在缺乏关注时会偏离
+- **记录标准** - "好"看起来像什么?
+- **跟踪指标** - 即使定性领域也从测量中受益
 
-Areas are the backdrop of your life. They don't complete, but they evolve. Use Claude Code to help you see patterns and maintain balance across all your responsibilities.
+## 记住
+
+领域是你生活的背景。它们不会完成,但会进化。使用 Claude Code 帮助你看到模式并在所有职责中保持平衡。

@@ -1,75 +1,75 @@
 ---
 allowed-tools: Write, Read, Bash(ls:*, mkdir:*), Edit
-description: Create a new Claude Code slash command
-argument-hint: [command details or description]
+description: 创建新的 Claude Code 斜杠命令
+argument-hint: [命令详细信息或描述]
 ---
 
-# Create New Slash Command
+# 创建新斜杠命令
 
-I'll help you create a new Claude Code slash command.
+我将帮助你创建一个新的 Claude Code 斜杠命令。
 
-## Your Input
+## 你的输入
 
-**Command Details:** $ARGUMENTS
+**命令详细信息:** $ARGUMENTS
 
-## Process
+## 流程
 
-1. **Understand Requirements**
-   - What should the command do?
-   - What tools does it need?
-   - What output should it produce?
+1. **理解需求**
+   - 命令应该做什么?
+   - 需要什么工具?
+   - 应该产生什么输出?
 
-2. **Design Structure**
-   - Command name (kebab-case)
-   - Required tools
-   - Input arguments
-   - Output format
+2. **设计结构**
+   - 命令名称(kebab-case)
+   - 所需工具
+   - 输入参数
+   - 输出格式
 
-3. **Create Command File**
-   - Location: `.claude/commands/[command-name].md`
-   - Include proper frontmatter
-   - Clear instructions
-   - Example usage
+3. **创建命令文件**
+   - 位置: `.claude/commands/[command-name].md`
+   - 包含正确的 frontmatter
+   - 清晰的说明
+   - 使用示例
 
-## Command Template
+## 命令模板
 
 ```markdown
 ---
-allowed-tools: [List tools needed: Read, Write, Edit, Bash, etc.]
-description: [One-line description]
-argument-hint: [What user should provide]
+allowed-tools: [列出所需工具: Read, Write, Edit, Bash 等]
+description: [一行描述]
+argument-hint: [用户应该提供的内容]
 ---
 
-# Command Name
+# 命令名称
 
-Brief description of what this command does.
+简要描述此命令的作用。
 
-## Task
+## 任务
 
-[Clear description of the task]
+[任务的清晰描述]
 
-## Process
+## 流程
 
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+1. [步骤 1]
+2. [步骤 2]
+3. [步骤 3]
 
-## Output
+## 输出
 
-[Expected output format]
+[预期输出格式]
 
-## Example Usage
+## 使用示例
 
 \`\`\` claude run [command-name] [arguments] \`\`\`
 ```
 
-## Best Practices
+## 最佳实践
 
-- Keep commands focused on one task
-- Use clear, descriptive names
-- Include example usage
-- Document required arguments
-- Specify output format
-- List needed tools in frontmatter
+- 保持命令专注于单个任务
+- 使用清晰、描述性的名称
+- 包含使用示例
+- 记录所需参数
+- 指定输出格式
+- 在 frontmatter 中列出所需工具
 
-Let me help you create your command!
+让我帮助你创建命令!

@@ -1,71 +1,70 @@
-# Research Assistant
+# 研究助手
 
-Conduct thorough research on topics by searching the vault and synthesizing
-findings.
+通过搜索仓库和综合发现来对主题进行彻底研究。
 
-## Process
+## 流程
 
-1. **Initial Search**
-   - Search the entire vault for the topic
-   - Identify all relevant notes
-   - Note gaps in existing knowledge
+1. **初始搜索**
+   - 在整个仓库中搜索主题
+   - 识别所有相关笔记
+   - 注意现有知识中的差距
 
-2. **Deep Dive**
-   - Read all relevant notes thoroughly
-   - Extract key insights and quotes
-   - Identify contradictions or tensions
-   - Map connections between ideas
+2. **深入探讨**
+   - 彻底阅读所有相关笔记
+   - 提取关键洞察和引用
+   - 识别矛盾或张力
+   - 绘制想法之间的联系
 
-3. **Synthesis**
-   - Create a summary of findings
-   - Highlight patterns and themes
-   - Note questions that remain unanswered
-   - Suggest areas for further research
+3. **综合**
+   - 创建发现的摘要
+   - 突出模式和主题
+   - 记录仍未回答的问题
+   - 建议进一步研究的领域
 
-## Output Structure
+## 输出结构
 
 ```markdown
-# Research Summary: [Topic]
+# 研究摘要: [主题]
 
-## Existing Knowledge
+## 现有知识
 
-- What's already in the vault
-- Key insights from previous work
+- 仓库中已有的内容
+- 以前工作的关键洞察
 
-## Key Themes
+## 关键主题
 
-1. Theme 1
-   - Supporting notes: [[note1]], [[note2]]
-   - Key insight: ...
-2. Theme 2
-   - Supporting notes: [[note3]], [[note4]]
-   - Key insight: ...
+1. 主题 1
+   - 支持笔记: [[笔记1]], [[笔记2]]
+   - 关键洞察: ...
+2. 主题 2
+   - 支持笔记: [[笔记3]], [[笔记4]]
+   - 关键洞察: ...
 
-## Contradictions/Tensions
+## 矛盾/张力
 
-- Where ideas conflict
-- Unresolved questions
+- 想法冲突的地方
+- 未解决的问题
 
-## Gaps
+## 差距
 
-- What's missing
-- What to research next
+- 缺少什么
+- 接下来要研究什么
 
-## Connections
+## 联系
 
-- Related topics: [[topic1]], [[topic2]]
-- Surprising links: ...
+- 相关主题: [[主题1]], [[主题2]]
+- 令人惊讶的联系: ...
 
-## Recommended Next Steps
+## 建议的下一步
 
-1. Specific research needed
-2. Questions to explore
-3. Experiments to try
+1. 需要的具体研究
+2. 要探索的问题
+3. 要尝试的实验
 ```
 
-## Tips
+## 提示
 
-- Cast a wide net initially, then focus
-- Look for surprising connections
-- Don't ignore contradictions - they're often where insights live
-- Always suggest concrete next actions
+- 最初广泛撒网,然后聚焦
+- 寻找令人惊讶的联系
+- 不要忽视矛盾 - 它们往往是洞察所在的地方
+- 始终建议具体的下一步行动

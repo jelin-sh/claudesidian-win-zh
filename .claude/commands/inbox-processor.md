@@ -1,54 +1,53 @@
-# Inbox Processor
+# 收件箱处理器
 
-Help organize and process items in the 00_Inbox folder according to the PARA
-method.
+帮助按照 PARA 方法组织和处理 00_Inbox 文件夹中的项目。
 
-## Task
+## 任务
 
-Review all notes in `00_Inbox/` and help categorize them:
+审查 `00_Inbox/` 中的所有笔记并帮助分类:
 
-1. **Scan the Inbox**
-   - List all files currently in 00_Inbox
-   - Exclude README.md and Welcome.md
+1. **扫描收件箱**
+   - 列出当前 00_Inbox 中的所有文件
+   - 排除 README.md 和 Welcome.md
 
-2. **Analyze Each Item**
-   - Read the content
-   - Identify the type of note
-   - Suggest appropriate destination
+2. **分析每个项目**
+   - 阅读内容
+   - 识别笔记类型
+   - 建议合适的目标位置
 
-3. **Categorization Rules**
-   - **→ 01_Projects**: Has deadline, specific outcome
-   - **→ 02_Areas**: Ongoing responsibility, no end date
-   - **→ 03_Resources**: Reference material, knowledge
-   - **→ 04_Archive**: Old/completed, no longer active
-   - **→ Delete**: No value, redundant, or temporary
+3. **分类规则**
+   - **→ 01_Projects**: 有截止日期、具体成果
+   - **→ 02_Areas**: 持续责任、无结束日期
+   - **→ 03_Resources**: 参考资料、知识
+   - **→ 04_Archive**: 旧/已完成、不再活跃
+   - **→ 删除**: 无价值、重复或临时
 
-4. **Suggest Actions**
+4. **建议操作**
 
    ```
-   File: [filename]
-   Type: [detected type]
-   Destination: [suggested folder]
-   Reason: [why this categorization]
-   Related to: [any existing notes it connects to]
+   文件: [文件名]
+   类型: [检测到的类型]
+   目标位置: [建议的文件夹]
+   原因: [为何这样分类]
+   关联: [与现有笔记的联系]
    ```
 
-5. **Identify Patterns**
-   - Common themes across multiple notes
-   - Notes that could be combined
-   - Missing connections between items
+5. **识别模式**
+   - 多个笔记中的共同主题
+   - 可以合并的笔记
+   - 项目之间缺失的联系
 
-## Output Format
+## 输出格式
 
-Provide a clear action plan:
+提供清晰的行动计划:
 
-1. Items to move (with destinations)
-2. Items to combine or link
-3. Items to delete
-4. Items needing more context
+1. 要移动的项目(含目标位置)
+2. 要合并或链接的项目
+3. 要删除的项目
+4. 需要更多上下文的项目
 
-## Remember
+## 记住
 
-- Some items legitimately belong in the Inbox (daily notes, quick captures)
-- Don't over-organize - sometimes "good enough" is perfect
-- Look for opportunities to connect ideas, not just file them
+- 有些项目确实属于收件箱(每日笔记、快速捕获)
+- 不要过度组织 - 有时"足够好"就是完美
+- 寻找连接想法的机会,而不仅仅是归档

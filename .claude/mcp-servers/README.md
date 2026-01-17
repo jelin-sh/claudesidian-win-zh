@@ -1,114 +1,113 @@
-# MCP Servers
+# MCP 服务器
 
-Model Context Protocol servers extend Claude Code's capabilities.
+Model Context Protocol 服务器扩展 Claude Code 的功能。
 
 ## Gemini Vision MCP
 
-Adds powerful image and document analysis capabilities using Google's Gemini
-model.
+使用 Google 的 Gemini 模型添加强大的图像和文档分析功能。
 
-### Features
+### 功能特性
 
-- **Image Analysis**: Describe, analyze, and extract text from images
-- **Document Processing**: Analyze PDFs and documents
-- **Multi-Image Comparison**: Compare multiple images at once
-- **OCR**: Extract text from images
-- **Smart Filename Suggestions**: Generate descriptive filenames for images
+- **图像分析**: 描述、分析图像并从中提取文本
+- **文档处理**: 分析 PDF 和文档
+- **多图像对比**: 一次对比多张图像
+- **OCR**: 从图像中提取文本
+- **智能文件名建议**: 为图像生成描述性文件名
 
-### Setup
+### 设置
 
-1. **Get a Gemini API Key**
-   - Visit: https://aistudio.google.com/apikey
-   - Create a free API key
+1. **获取 Gemini API 密钥**
+   - 访问: https://aistudio.google.com/apikey
+   - 创建免费 API 密钥
 
-2. **Add to Environment**
+2. **添加到环境变量**
 
    ```bash
-   # Add to ~/.zshrc or ~/.bashrc
+   # 添加到 ~/.zshrc 或 ~/.bashrc
    export GEMINI_API_KEY='your-key-here'
 
-   # Reload shell
+   # 重新加载 shell
    source ~/.zshrc
    ```
 
-3. **Install Dependencies**
+3. **安装依赖**
 
    ```bash
    pnpm install
    ```
 
-4. **Test Setup**
+4. **测试设置**
    ```bash
    pnpm test-gemini
    ```
 
-### Available Commands
+### 可用命令
 
-Once configured, these commands become available in Claude Code:
+配置完成后,Claude Code 中可使用以下命令:
 
-- `mcp__gemini-vision__analyze_image` - Analyze a single image
-- `mcp__gemini-vision__analyze_multiple` - Compare multiple images
-- `mcp__gemini-vision__extract_text` - OCR text extraction
-- `mcp__gemini-vision__compare_images` - Compare two images
-- `mcp__gemini-vision__suggest_image_filename` - Generate descriptive filename
-- `mcp__gemini-vision__analyze_document` - Analyze PDFs and documents
+- `mcp__gemini-vision__analyze_image` - 分析单张图像
+- `mcp__gemini-vision__analyze_multiple` - 对比多张图像
+- `mcp__gemini-vision__extract_text` - OCR 文本提取
+- `mcp__gemini-vision__compare_images` - 对比两张图像
+- `mcp__gemini-vision__suggest_image_filename` - 生成描述性文件名
+- `mcp__gemini-vision__analyze_document` - 分析 PDF 和文档
 
-### Usage Examples
+### 使用示例
 
-**Analyze Screenshot**
-
-```
-Analyze the image at 05_Attachments/screenshot.png
-and tell me what it contains.
-```
-
-**Process Multiple Images**
+**分析截图**
 
 ```
-Compare all images in 05_Attachments/Organized/
-and identify common themes.
+分析位于 05_Attachments/screenshot.png 的图像
+并告诉我它包含什么内容。
 ```
 
-**Extract Text**
+**处理多张图像**
 
 ```
-Extract all text from the PDF at
-05_Attachments/document.pdf
+对比 05_Attachments/Organized/ 中的所有图像
+并识别共同主题。
 ```
 
-**Rename Images**
+**提取文本**
 
 ```
-Suggest better names for all images
-in 05_Attachments/ based on their content.
+从位于 05_Attachments/document.pdf 的 PDF
+中提取所有文本。
 ```
 
-### Troubleshooting
+**重命名图像**
+
+```
+根据内容为 05_Attachments/ 中的所有图像
+建议更好的名称。
+```
+
+### 故障排除
 
 **"GEMINI_API_KEY not found"**
 
-- Make sure you've added the key to your shell profile
-- Restart your terminal and Claude Code
+- 确保已将密钥添加到 shell 配置文件
+- 重启终端和 Claude Code
 
 **"File not found"**
 
-- Use absolute paths or paths relative to vault root
-- Check file permissions
+- 使用绝对路径或相对于仓库根目录的路径
+- 检查文件权限
 
-**Rate Limits**
+**速率限制**
 
-- Free tier: 15 requests per minute
-- Consider upgrading for heavy usage
+- 免费层: 每分钟 15 次请求
+- 大量使用时可考虑升级
 
-## Adding More MCPs
+## 添加更多 MCP
 
-1. Place MCP server file in `.claude/mcp-servers/`
-2. Add configuration to Claude settings
-3. Document setup here
-4. Add usage examples
+1. 将 MCP 服务器文件放在 `.claude/mcp-servers/` 中
+2. 将配置添加到 Claude 设置
+3. 在此记录设置步骤
+4. 添加使用示例
 
-## Resources
+## 资源
 
-- [MCP Documentation](https://modelcontextprotocol.io)
-- [Gemini API Docs](https://ai.google.dev)
-- [Claude Code MCP Guide](https://claude.ai/docs/mcp)
+- [MCP 文档](https://modelcontextprotocol.io)
+- [Gemini API 文档](https://ai.google.dev)
+- [Claude Code MCP 指南](https://claude.ai/docs/mcp)

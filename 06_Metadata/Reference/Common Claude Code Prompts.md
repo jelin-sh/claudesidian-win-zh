@@ -1,170 +1,170 @@
-# Common Claude Code Prompts
+# 常用 Claude Code 提示
 
-A collection of useful prompts for working with Claude Code in your vault.
+在仓库中使用 Claude Code 的有用提示集合。
 
-## Starting Work
+## 开始工作
 
-### Beginning a Session
+### 开始会话
 ```
-I'm starting work for today. 
-Can you review what I was working on yesterday 
-and help me pick up where I left off?
-```
-
-### Setting the Mode
-```
-I'm in thinking mode, not writing mode.
-Please help me explore [topic] by asking questions
-and searching for relevant notes.
+我开始今天的工作。
+你能审查我昨天在做什么,
+并帮助我从上次停下的地方继续吗?
 ```
 
-## Research & Synthesis
-
-### Finding Connections
+### 设置模式
 ```
-Search my vault for anything related to [topic].
-What patterns or connections do you see?
-```
-
-### Synthesizing a Project
-```
-Review all notes in [project folder].
-Create a synthesis of the key themes, insights, and open questions.
+我处于思考模式,而不是写作模式。
+请通过提问和搜索相关笔记
+来帮助我探索 [主题]。
 ```
 
-### Weekly Review
+## 研究与综合
+
+### 寻找联系
 ```
-Look at all notes created this week.
-What are the main themes? 
-What connections exist between different projects?
+在我的仓库中搜索与 [主题] 相关的任何内容。
+你看到了什么模式或联系?
 ```
 
-## Organization
-
-### Processing Inbox
+### 综合项目
 ```
-Review items in 00_Inbox.
-Suggest where each should be moved based on PARA method.
-Which items could be combined or linked?
+审查 [项目文件夹] 中的所有笔记。
+创建关键主题、洞察和未解决问题的综合。
 ```
 
-### Finding Orphans
+### 每周审查
 ```
-Find notes that aren't linked to any other notes.
-Suggest potential connections.
-```
-
-### Cleaning Attachments
-```
-Review files in 05_Attachments.
-Which ones aren't referenced in any notes?
-Which could be better named?
+查看本周创建的所有笔记。
+主要主题是什么?
+不同项目之间存在什么联系?
 ```
 
-## Writing & Creation
+## 组织
 
-### Moving to Writing Mode
+### 处理收件箱
 ```
-I'm ready to move from thinking to writing mode.
-Based on our research in [project], 
-help me create an outline for [deliverable].
-```
-
-### Improving a Draft
-```
-Review [document].
-Don't rewrite it, but give me specific feedback on:
-- Structure and flow
-- Gaps in logic or evidence
-- Areas that need clarification
+审查 00_Inbox 中的项目。
+根据 PARA 方法建议每个应该移动到哪里。
+哪些项目可以合并或链接?
 ```
 
-## Learning & Development
-
-### Exploring a New Topic
+### 查找孤立项
 ```
-I want to learn about [topic].
-Start by searching my vault for any existing knowledge.
-Then help me identify what I need to research.
+查找没有链接到任何其他笔记的笔记。
+建议潜在的联系。
 ```
 
-### Making an Argument
+### 清理附件
 ```
-I'm trying to argue that [thesis].
-Search my notes for supporting evidence.
-What counterarguments should I address?
-```
-
-## Project Management
-
-### Project Status
-```
-Review the project in [folder].
-What's the current status?
-What are the next actions needed?
+审查 05_Attachments 中的文件。
+哪些没有在任何笔记中被引用?
+哪些可以更好地命名?
 ```
 
-### Creating a Retrospective
+## 写作与创作
+
+### 转到写作模式
 ```
-[Project] is now complete.
-Review all notes and create a retrospective covering:
-- What was accomplished
-- Key learnings
-- What to do differently next time
+我准备好从思考模式转到写作模式。
+基于我们在 [项目] 中的研究,
+帮助我为 [可交付成果] 创建大纲。
 ```
 
-## Daily Operations
-
-### Morning Review
+### 改进草稿
 ```
-Good morning. Show me:
-- Any notes modified yesterday
-- Open tasks or questions
-- What should I focus on today?
-```
-
-### End of Day Wrap-up
-```
-End of day review:
-- What did I accomplish today?
-- What questions or ideas emerged?
-- What should I prioritize tomorrow?
+审查 [文档]。
+不要重写它,但给我关于以下方面的具体反馈:
+- 结构和流程
+- 逻辑或证据中的差距
+- 需要澄清的领域
 ```
 
-## Advanced Techniques
+## 学习与发展
 
-### Cross-Project Analysis
+### 探索新主题
 ```
-Compare insights from [Project A] and [Project B].
-What patterns exist across both?
-What could each learn from the other?
-```
-
-### Knowledge Gaps
-```
-Analyze my notes on [topic].
-What aspects am I missing?
-What questions haven't I asked?
+我想学习关于 [主题]。
+首先在我的仓库中搜索任何现有知识。
+然后帮助我确定我需要研究什么。
 ```
 
-### Idea Development
+### 提出论点
 ```
-I have this rough idea: [idea]
-Search for related concepts in my vault.
-Help me develop this into something more concrete.
+我试图论证 [论题]。
+在我的笔记中搜索支持证据。
+我应该解决什么反驳论点?
 ```
 
-## Tips for Effective Prompts
+## 项目管理
 
-1. **Be specific about mode** (thinking vs writing)
-2. **Reference specific folders** when relevant
-3. **Ask for questions**, not just answers
-4. **Request synthesis**, not just search
-5. **Iterate freely** - have a conversation
+### 项目状态
+```
+审查 [文件夹] 中的项目。
+当前状态是什么?
+需要哪些下一步行动?
+```
 
-## Remember
+### 创建回顾
+```
+[项目] 现在已完成。
+审查所有笔记并创建一个回顾,包括:
+- 完成了什么
+- 关键学习
+- 下次不同的做法
+```
 
-- Claude Code has access to your entire vault
-- It can create, edit, and organize files
-- Use it as a thinking partner, not just a tool
-- The best prompts emerge from your specific needs
+## 日常操作
+
+### 早晨审查
+```
+早上好。给我看:
+- 昨天修改的任何笔记
+- 未完成的任务或问题
+- 我今天应该专注于什么?
+```
+
+### 一天结束时的总结
+```
+一天结束时回顾:
+- 今天我完成了什么?
+- 出现了什么问题或想法?
+- 明天我应该优先考虑什么?
+```
+
+## 高级技巧
+
+### 跨项目分析
+```
+比较 [项目 A] 和 [项目 B] 的洞察。
+两者之间存在什么模式?
+每个能从对方学到什么?
+```
+
+### 知识差距
+```
+分析我关于 [主题] 的笔记。
+我缺少哪些方面?
+我没有问什么问题?
+```
+
+### 想法发展
+```
+我有这个粗略的想法: [想法]
+在我的仓库中搜索相关概念。
+帮助我将其发展成更具体的东西。
+```
+
+## 有效提示的技巧
+
+1. **明确指定模式**(思考 vs 写作)
+2. **引用特定文件夹**(当相关时)
+3. **提出问题**,而不仅仅是答案
+4. **请求综合**,而不仅仅是搜索
+5. **自由迭代** - 进行对话
+
+## 记住
+
+- Claude Code 可以访问你的整个仓库
+- 它可以创建、编辑和组织文件
+- 将其用作思考伙伴,而不仅仅是工具
+- 最好的提示从你的特定需求中出现

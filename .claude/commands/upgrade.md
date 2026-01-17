@@ -1,40 +1,36 @@
 ---
 name: upgrade
 description:
-  Intelligently upgrade claudesidian with new features while preserving user
-  customizations using AI-powered semantic analysis
+  使用 AI 驱动的语义分析智能升级 claudesidian,在保留用户自定义的同时添加新功能
 allowed-tools: [Read, Write, Edit, MultiEdit, Bash, WebFetch, Grep, Glob]
 argument-hint:
-  "(optional) 'check' to preview changes, 'force' to skip confirmations"
+  "(可选) 'check' 预览更改,'force' 跳过确认"
 ---
 
-# Smart Upgrade Command
+# 智能升级命令
 
-Intelligently upgrades your claudesidian installation by fetching the latest
-release from GitHub and using AI-powered semantic analysis to merge new features
-with your existing customizations. Preserves user intent while adding new
-capabilities.
+通过从 GitHub 获取最新版本并使用 AI 驱动的语义分析将新功能与现有自定义合并,智能升级您的 claudesidian 安装。在添加新功能的同时保留用户意图。
 
-## Task
+## 任务
 
-1. Check GitHub for the latest claudesidian release
-2. Download and analyze what has changed since your version
-3. Use Claude's semantic understanding to identify user customizations
-4. Intelligently merge new features with existing customizations
-5. Safely apply updates while preserving user data and preferences
-6. Create backups and provide rollback options
+1. 检查 GitHub 上是否有最新的 claudesidian 版本
+2. 下载并分析自您的版本以来的更改
+3. 使用 Claude 的语义理解识别用户自定义
+4. 智能地将新功能与现有自定义合并
+5. 安全地应用更新,同时保留用户数据和偏好设置
+6. 创建备份并提供回滚选项
 
-## Process
+## 流程
 
-### 1. **Version Check & Setup**
+### 1. **版本检查与设置**
 
-- Get current version from package.json
-- Check if already on latest version:
+- 从 package.json 获取当前版本
+- 检查是否已经是最新版本:
 
   ```bash
-  # Use cut instead of sed to avoid zsh parentheses escaping issues
+  # 使用 cut 而不是 sed 以避免 zsh 括号转义问题
   CURRENT=$(grep '"version"' package.json | head -1 | cut -d'"' -f4)
-  LATEST=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep '"version"' | head -1 | cut -d'"' -f4)
+  LATEST=$(curl -s https://raw.githubusercontent.com/jelin-sh/claudesidian-win-zh/refs/heads/main/package.json | grep '"version"' | head -1 | cut -d'"' -f4)
 
   if [ "$CURRENT" = "$LATEST" ]; then
     echo "✅ You're already on the latest version ($CURRENT)"
@@ -42,14 +38,14 @@ capabilities.
   fi
   ```
 
-- Create timestamped backup in `.backup/upgrade-YYYY-MM-DD-HHMMSS/`:
+- 在 `.backup/upgrade-YYYY-MM-DD-HHMMSS/` 中创建带时间戳的备份:
 
   ```bash
-  # Create backup directory
+  # 创建备份目录
   BACKUP_DIR=".backup/upgrade-$(date +%Y-%m-%d-%H%M%S)"
   mkdir -p "$BACKUP_DIR"
 
-  # Copy all important files to backup
+  # 将所有重要文件复制到备份
   cp -r .claude "$BACKUP_DIR/"
   cp -r .scripts "$BACKUP_DIR/"
   cp package.json "$BACKUP_DIR/"
@@ -59,134 +55,132 @@ capabilities.
   echo "✅ Backup created in $BACKUP_DIR"
   ```
 
-- Clone latest claudesidian to temp directory (doesn't affect user's repo):
+- 将最新的 claudesidian 克隆到临时目录(不影响用户的仓库):
   ```bash
-  # Get fresh copy in .tmp dir (hidden from Obsidian) - user's repo stays disconnected
-  git clone --depth=1 --branch=main https://github.com/heyitsnoah/claudesidian.git .tmp/claudesidian-upgrade
+  # 在 .tmp 目录中获取新副本 (对 Obsidian 隐藏) - 用户的仓库保持断开连接
+  git clone --depth=1 --branch=main https://github.com/jelin-sh/claudesidian-win-zh.git .tmp/claudesidian-upgrade
   ```
-- Now we have latest version to compare against
+- 现在我们有了最新版本进行比较
 
-### 2. **Create Upgrade Checklist**
+### 2. **创建升级检查清单**
 
-- Compare system files between current directory and .tmp/claudesidian-upgrade/:
+- 比较当前目录与 .tmp/claudesidian-upgrade/ 之间的系统文件:
 
   ```bash
-  # Find all system files that differ AND new files in upstream
-  # First, find files that exist in both but differ
+  # 查找所有不同的系统文件以及上游中的新文件
+  # 首先,查找存在于两者中但不同的文件
   diff -qr . .tmp/claudesidian-upgrade/ --include="*.md" --include="*.sh" --include="*.json" |
   grep -E '(\.claude/|\.scripts/|package\.json|CHANGELOG\.md|README\.md)' |
   grep -v '(00_|01_|02_|03_|04_|05_|06_|\.obsidian|CLAUDE\.md)'
 
-  # Also find NEW files in upstream (like new commands)
+  # 还要查找上游中的新文件(如新命令)
   find .tmp/claudesidian-upgrade/.claude/commands -name "*.md" | while read f; do
     local_file=${f#.tmp/claudesidian-upgrade/}
     [ ! -f "$local_file" ] && echo "NEW: $local_file"
   done
   ```
 
-- Create checklist of files that need review
-- Explicitly EXCLUDE:
-  - User content folders (00_Inbox, 01_Projects, etc.)
-  - User's CLAUDE.md (their personalized version)
-  - vault-config.json (user's vault configuration)
-  - .obsidian/ (user's Obsidian settings)
-  - Any .md files in the root except README and CHANGELOG
-- Create `.upgrade-checklist.md` with only system files that differ
-- Mark each file with status: `[ ] pending`, `[x] updated`, `[-] skipped`
-- Group files by type for easier review:
+- 创建需要审查的文件清单
+- 明确排除:
+  - 用户内容文件夹 (00_Inbox、01_Projects 等)
+  - 用户的 CLAUDE.md(他们的个性化版本)
+  - vault-config.json(用户的仓库配置)
+  - .obsidian/(用户的 Obsidian 设置)
+  - 根目录中的任何 .md 文件,除了 README 和 CHANGELOG
+- 仅使用不同的系统文件创建 `.upgrade-checklist.md`
+- 用状态标记每个文件: `[ ] 待处理`、`[x] 已更新`、`[-] 已跳过`
+- 按类型分组文件以便于审查:
 
   ```markdown
-  ## Commands (12 files)
+  ## Commands (12 个文件)
 
   [ ] .claude/commands/init-bootstrap.md [ ] .claude/commands/release.md [ ]
   .claude/commands/thinking-partner.md ...
 
-  ## Settings (2 files)
+  ## Settings (2 个文件)
 
   [ ] .claude/settings.json [ ] .claude/settings.local.json
 
-  ## Core Files (3 files)
+  ## Core Files (3 个文件)
 
   [ ] package.json [ ] CHANGELOG.md [ ] README.md
   ```
 
-### 3. **File-by-File Review**
+### 3. **逐文件审查**
 
-**⚠️ CRITICAL IMPLEMENTATION REQUIREMENT:**
+**⚠️ 关键实施要求:**
 
-- **NEVER blindly overwrite files without showing diffs first**
-- **ALWAYS show diffs to the user first**
-- **ALWAYS ask for confirmation before replacing files**
-- **Skipping these steps can lose user customizations!**
-- **NEVER use `cp` or `cp -f` (both can cause prompts on protected files)**
-- **ALWAYS USE `cat source > dest` for guaranteed non-interactive replacement**
-- **WAIT for actual user input - don't automatically choose option 1**
+- **绝不盲目覆盖文件,必须先显示差异**
+- **始终先向用户显示差异**
+- **始终在替换文件之前请求确认**
+- **跳过这些步骤可能会丢失用户自定义!**
+- **绝不使用 `cp` 或 `cp -f`(两者都可能导致受保护文件的提示)**
+- **始终使用 `cat source > dest` 进行保证的非交互式替换**
+- **等待实际的用户输入 - 不要自动选择选项 1**
 
-For EACH file in the checklist:
+对于清单中的每个文件:
 
-1.  Read current checklist status from `.upgrade-checklist.md`
-2.  **MANDATORY: Show the diff between local and upstream**:
+1. 从 `.upgrade-checklist.md` 读取当前清单状态
+2. **强制: 显示本地和上游之间的差异**:
     ```bash
-    # ALWAYS show this to the user!
+    # 始终向用户显示此内容!
     diff -u current/file .tmp/claudesidian-upgrade/file
     ```
-3.  Determine update strategy:
-    - **No local changes**: Direct replace from upstream
-    - **Never update**: User's CLAUDE.md, vault-config.json, .mcp.json
-    - **Local changes detected**: Ask user:
+3. 确定更新策略:
+    - **无本地更改**: 从上游直接替换
+    - **永不更新**: 用户的 CLAUDE.md、vault-config.json、.mcp.json
+    - **检测到本地更改**: 询问用户:
 
       ```
-      File: .claude/commands/thinking-partner.md has local modifications
+      文件: .claude/commands/thinking-partner.md 有本地修改
 
-      Options:
-      1. Keep your version (skip update)
-      2. Take upstream version (lose your changes)
-      3. View diff and decide
-      4. Try to merge both (AI-assisted)
+      选项:
+      1. 保留您的版本(跳过更新)
+      2. 采用上游版本(丢失您的更改)
+      3. 查看差异并决定
+      4. 尝试合并两者(AI 辅助)
 
-      Choice (1/2/3/4): [WAIT FOR USER TO TYPE NUMBER AND PRESS ENTER]
+      选择 (1/2/3/4): [等待用户输入数字并按回车]
       ```
 
-      **IMPORTANT**: Actually WAIT for the user to type their choice! Do NOT
-      automatically select any option. The user must manually type 1, 2, 3, or 4
-      and press Enter.
+      **重要**: 实际上等待用户输入他们的选择!不要自动选择任何选项。用户必须手动输入 1、2、3 或 4 并按回车。
 
-4.  Apply the chosen strategy:
-    - **For option 1 (Apply update/Take upstream)**:
+4. 应用所选策略:
+    - **对于选项 1(应用更新/采用上游)**:
       ```bash
-      # IMPORTANT: Check if file exists first, then use cat with redirection
+      # 重要: 首先检查文件是否存在,然后使用 cat 和重定向
       if [ -f ".tmp/claudesidian-upgrade/path/to/file" ]; then
         cat .tmp/claudesidian-upgrade/path/to/file > path/to/file && echo "✅ Updated"
       else
         echo "⚠️ File not found in upstream - keeping local version"
       fi
       ```
-    - **For option 2 (Keep your version)**:
+    - **对于选项 2(保留您的版本)**:
       ```bash
       echo "✅ Kept your version"
       ```
-    - **For option 4 (AI merge)**: Read both files and create merged version
-5.  **CRITICAL: Update the checklist file immediately**:
+    - **对于选项 4(AI 合并)**: 读取两个文件并创建合并版本
+5. **关键: 立即更新清单文件**:
     ```markdown
-    [ ] .claude/commands/init-bootstrap.md → becomes → [x]
+    [ ] .claude/commands/init-bootstrap.md → 变成 → [x]
     .claude/commands/init-bootstrap.md
     ```
-6.  Save `.upgrade-checklist.md` after EVERY file update
-7.  Move to next file
+6. 每次文件更新后保存 `.upgrade-checklist.md`
+7. 移动到下一个文件
 
-### 4. **Update Types**
+### 4. **更新类型**
 
-- **Safe to replace**: `.claude/commands/*.md`, `.claude/agents/*.md`,
+- **安全替换**: `.claude/commands/*.md`、`.claude/agents/*.md`、
   `.scripts/*`
-- **Needs review**: `package.json` (preserve user's custom scripts)
-- **Never touch**: User content folders, CLAUDE.md, API configs
+- **需要审查**: `package.json`(保留用户自定义脚本)
+- **永不触及**: 用户内容文件夹、CLAUDE.md、API 配置
 
-#### Batch Updates for Similar Files
+#### 相似文件的批量更新
 
-For commands that have only formatting changes, you can batch update:
+对于只有格式更改的命令,您可以批量更新:
 
 ```bash
-# Batch update multiple command files with same type of changes
+# 批量更新多个具有相同类型更改的命令文件
 for file in thinking-partner.md daily-review.md inbox-processor.md; do
   if [ -f ".tmp/claudesidian-upgrade/.claude/commands/$file" ]; then
     cat ".tmp/claudesidian-upgrade/.claude/commands/$file" > ".claude/commands/$file"
@@ -195,270 +189,269 @@ for file in thinking-partner.md daily-review.md inbox-processor.md; do
 done
 ```
 
-#### Handling Missing Upstream Files
+#### 处理缺失的上游文件
 
-Some files may exist locally but not in upstream (like deprecated agents):
+某些文件可能在本地存在但不在上游中(如已弃用的代理):
 
 ```bash
-# Check if file exists in upstream before trying to update
+# 在尝试更新之前检查文件是否在上游中存在
 if [ ! -f ".tmp/claudesidian-upgrade/$filepath" ]; then
   echo "⚠️ $filepath not in upstream - keeping local version"
-  # Mark as skipped in checklist: [-]
+  # 在清单中标记为跳过: [-]
 fi
 ```
 
-### 5. **Progress Tracking**
+### 5. **进度跟踪**
 
-- Use TodoWrite tool to track progress alongside the checklist
-- Save progress after each file in `.upgrade-checklist.md`
-- **MUST mark items in checklist**:
-  - `[x]` = completed
-  - `[-]` = skipped (user customization)
-  - `[ ]` = still pending
-- If interrupted, can resume from where you left off
-- Show progress: "Updating file 5 of 23..."
-- Clear indication of what's been done and what's remaining
+- 使用 TodoWrite 工具与清单一起跟踪进度
+- 在 `.upgrade-checklist.md` 中保存每个文件后的进度
+- **必须在清单中标记项目**:
+  - `[x]` = 已完成
+  - `[-]` = 已跳过(用户自定义)
+  - `[ ]` = 仍待处理
+- 如果中断,可以从中断处恢复
+- 显示进度: "正在更新文件 5/23..."
+- 清楚地显示已完成和剩余的内容
 
-### 6. **Verification Check**
+### 6. **验证检查**
 
-- Re-check all system files against the checklist
-- Compare with checklist to identify:
-  - Files marked `[ ]` pending = likely missed (problem)
-  - Files marked `[-]` skipped = intentionally kept different (fine)
-  - Files marked `[x]` updated but still in diff = merge issues or user edits
-    (review)
-- Show verification results:
+- 对照清单重新检查所有系统文件
+- 与清单比较以识别:
+  - 标记为 `[ ]` 待处理的文件 = 可能遗漏(问题)
+  - 标记为 `[-]` 跳过的文件 = 有意保持不同(正常)
+  - 标记为 `[x]` 已更新但仍在差异中的文件 = 合并问题或用户编辑
+    (需要审查)
+- 显示验证结果:
   ```
-  ✅ All required files updated successfully
-  ℹ️ 2 files intentionally kept with user customizations:
-  - .claude/commands/thinking-partner.md (user's concise style)
-  - package.json (user's custom scripts preserved)
-  - or -
-  ⚠️ Warning: 2 files appear to be missed (still marked pending):
+  ✅ 所有必要文件已成功更新
+  ℹ️ 2 个文件有意保留用户自定义:
+  - .claude/commands/thinking-partner.md (用户的简洁风格)
+  - package.json (保留用户自定义脚本)
+  - 或 -
+  ⚠️ 警告: 2 个文件似乎被遗漏(仍标记为待处理):
   - .claude/commands/release.md
   - .scripts/vault-stats.sh
   ```
-- Only flag as problem if files are still marked `[ ]` pending in checklist
+- 仅在清单中仍标记为 `[ ]` 待处理的文件才标记为问题
 
-### 7. **Final Steps**
+### 7. **最后步骤**
 
-- Update version in package.json
-- Verify all commands work
-- Clean up temp directory: `rm -rf .tmp/claudesidian-upgrade`
-- Save final checklist for reference (shows what was updated vs skipped)
-- Show summary of what was updated
+- 更新 package.json 中的版本
+- 验证所有命令是否工作
+- 清理临时目录: `rm -rf .tmp/claudesidian-upgrade`
+- 保存最终清单以供参考(显示更新与跳过的内容)
+- 显示更新摘要
 
-## Update Categories
+## 更新类别
 
-### 🤖 AI-Powered Intelligent Merge
+### 🤖 AI 驱动的智能合并
 
-**Commands** (`.claude/commands/*.md`):
+**命令** (`.claude/commands/*.md`):
 
-- Analyze user's prompt style, output preferences, workflow modifications
-- Merge new features with existing customizations
-- Preserve user's tone, structure, and specific requirements
+- 分析用户的提示风格、输出偏好、工作流修改
+- 将新功能与现有自定义合并
+- 保留用户的语气、结构和特定要求
 
-**Agents** (`.claude/agents/*.md`):
+**代理** (`.claude/agents/*.md`):
 
-- Understand user's interaction preferences
-- Combine new capabilities with existing personality
-- Maintain user's established workflows
+- 理解用户的交互偏好
+- 将新功能与现有个性结合
+- 维护用户已建立的工作流
 
-**Templates** (`06_Metadata/Templates/*.md`):
+**模板** (`06_Metadata/Templates/*.md`):
 
-- Preserve custom fields and structure
-- Add new template features
-- Maintain user's formatting preferences
+- 保留自定义字段和结构
+- 添加新模板功能
+- 维护用户的格式偏好
 
-### ⚡ Automatic Safe Updates
+### ⚡ 自动安全更新
 
-- **New commands/agents**: Purely additive, no conflicts
-- **Scripts** (`.scripts/*`): Utility functions, safe to replace
-- **Dependencies** (`package.json`): Security and feature updates
-- **Documentation**: README, CONTRIBUTING updates
+- **新命令/代理**: 纯添加,无冲突
+- **脚本** (`.scripts/*`): 实用函数,安全替换
+- **依赖项** (`package.json`): 安全和功能更新
+- **文档**: README、CONTRIBUTING 更新
 
-### 🛡️ Never Modified
+### 🛡️ 永不修改
 
-- **User content**: All `00_*` through `06_*` folders (except templates)
-- **Personal config**: User's `CLAUDE.md`
-- **API keys**: `.mcp.json`, environment variables
-- **Git history**: User's commits and branches
+- **用户内容**: 所有 `00_*` 到 `06_*` 文件夹(模板除外)
+- **个人配置**: 用户的 `CLAUDE.md`
+- **API 密钥**: `.mcp.json`、环境变量
+- **Git 历史**: 用户的提交和分支
 
-## Smart Conflict Resolution
+## 智能冲突解决
 
-When Claude detects conflicts:
+当 Claude 检测到冲突时:
 
-### Example Scenarios:
+### 示例场景:
 
-**Scenario 1: Command Enhancement**
-
-```
-📝 thinking-partner command has updates:
-
-YOUR VERSION: Custom concise output format, specific industry focus
-NEW VERSION: Added video analysis capability, improved questioning flow
-
-🤖 SMART MERGE PROPOSAL:
-✅ Keep your concise output style
-✅ Keep your industry-specific prompts
-✅ Add new video analysis features
-✅ Integrate improved questioning (adapted to your style)
-
-Options:
-1. 🎯 Apply smart merge (recommended)
-2. 👀 Show detailed diff first
-3. 🚫 Skip this update
-4. 💾 Replace with new version (backup yours)
-```
-
-**Scenario 2: Template Updates**
+**场景 1: 命令增强**
 
 ```
-📋 Project Template has changes:
+📝 thinking-partner 命令有更新:
 
-YOUR VERSION: Added custom fields for client info, budget tracking
-NEW VERSION: Enhanced metadata structure, new automation hooks
+您的版本: 自定义简洁输出格式,特定行业重点
+新版本: 添加了视频分析功能,改进的提问流程
 
-🤖 SMART MERGE PROPOSAL:
-✅ Preserve your custom client/budget fields
-✅ Add new metadata enhancements
-✅ Integrate automation hooks
-✅ Maintain your field ordering
+🤖 智能合并建议:
+✅ 保留您的简洁输出风格
+✅ 保留您的行业特定提示
+✅ 添加新的视频分析功能
+✅ 集成改进的提问(适​​应您的风格)
 
-Apply merge? (y/n/preview)
+选项:
+1. 🎯 应用智能合并(推荐)
+2. 👀 先显示详细差异
+3. 🚫 跳过此更新
+4. 💾 替换为新版本(备份您的)
 ```
 
-## Command Usage
+**场景 2: 模板更新**
 
-### Preview Mode (Recommended First Run)
+```
+📋 项目模板有更改:
+
+您的版本: 添加了客户信息、预算跟踪的自定义字段
+新版本: 增强的元数据结构,新的自动化钩子
+
+🤖 智能合并建议:
+✅ 保留您的自定义客户/预算字段
+✅ 添加新的元数据增强
+✅ 集成自动化钩子
+✅ 维护您的字段排序
+
+应用合并? (y/n/preview)
+```
+
+## 命令用法
+
+### 预览模式(推荐首次运行)
 
 ```
 /upgrade check
 ```
 
-- Shows what would be updated
-- Displays intelligent merge previews
-- No changes made to files
-- Safe to run anytime
+- 显示将要更新的内容
+- 显示智能合并预览
+- 不对文件进行任何更改
+- 任何时间运行都安全
 
-### Interactive Upgrade
+### 交互式升级
 
 ```
 /upgrade
 ```
 
-- Step-by-step confirmation for each change
-- Shows before/after for modified files
-- Allows selective application of updates
-- Creates automatic backups
+- 每个更改逐步确认
+- 显示修改文件的前后对比
+- 允许选择性应用更新
+- 创建自动备份
 
-### Batch Upgrade (Advanced)
+### 批量升级(高级)
 
 ```
 /upgrade force
 ```
 
-- Applies all safe updates automatically
-- Still prompts for complex merges
-- Faster for users comfortable with the process
-- Full backup created before starting
+- 自动应用所有安全更新
+- 仍然会提示复杂的合并
+- 对熟悉该过程的用户更快
+- 在开始之前创建完整备份
 
-## Safety Features
+## 安全功能
 
-### Automatic Backups
+### 自动备份
 
-- Complete backup before any changes: `.backup/upgrade-[timestamp]/`
-- Individual file backups for each modification
-- Backup includes current git state and uncommitted changes
+- 在任何更改之前完整备份: `.backup/upgrade-[timestamp]/`
+- 每次修改的单个文件备份
+- 备份包括当前的 git 状态和未提交的更改
 
-### Rollback Support
+### 回滚支持
 
 ```
-# If upgrade causes issues:
+# 如果升级导致问题:
 /rollback-upgrade [timestamp]
-# Restores from specific backup
+# 从特定备份恢复
 ```
 
-### Verification Steps
+### 验证步骤
 
-- Post-upgrade functionality testing
-- Command validation (runs test commands)
-- MCP server connectivity check
-- Git repository integrity verification
+- 升级后功能测试
+- 命令验证(运行测试命令)
+- MCP 服务器连接检查
+- Git 仓库完整性验证
 
-### Incremental Application
+### 增量应用
 
-- Updates applied one file at a time
-- Validation after each critical change
-- Stops on first error with clear diagnostics
-- Easy to identify which change caused issues
+- 一次更新一个文件
+- 每次关键更改后验证
+- 在第一个错误时停止并显示清晰诊断
+- 易于识别哪个更改导致了问题
 
-## Common Pitfalls to Avoid
+## 避免的常见陷阱
 
-### ⚠️ Selective Updates Problem
+### ⚠️ 选择性更新问题
 
-**Never cherry-pick files based only on release notes!** This leads to:
+**永远不要仅根据发行说明挑选文件!** 这会导致:
 
-- Missing critical command updates
-- Incomplete feature implementations
-- Broken dependencies between files
-- Users not getting all improvements
+- 缺少关键命令更新
+- 功能实现不完整
+- 文件之间的依赖关系损坏
+- 用户无法获得所有改进
 
-**Always use `git diff HEAD upstream/main --name-only`** to get the complete
-list of changed files, then update ALL relevant files systematically.
+**始终使用 `git diff HEAD upstream/main --name-only`** 获取更改文件的完整列表,然后系统地更新所有相关文件。
 
-## Error Handling
+## 错误处理
 
-### Common Scenarios
+### 常见场景
 
-- **No internet connection**: Graceful failure with offline options
-- **GitHub API rate limits**: Intelligent retry with backoff
-- **Merge conflicts**: Clear explanation and manual resolution options
-- **Permission issues**: Helpful guidance on fixing file permissions
+- **无网络连接**: 优雅失败,提供离线选项
+- **GitHub API 速率限制**: 智能重试和退避
+- **合并冲突**: 清楚解释和手动解决选项
+- **权限问题**: 有关修复文件权限的有用指导
 
-### Recovery Options
+### 恢复选项
 
-- **Partial failure**: Continue from last successful step
-- **Complete failure**: Full rollback to pre-upgrade state
-- **Git conflicts**: Merge upstream changes with local commits
-- **Dependency issues**: Fallback to previous working versions
+- **部分失败**: 从最后成功的步骤继续
+- **完全失败**: 完全回滚到升级前状态
+- **Git 冲突**: 将上游更改与本地提交合并
+- **依赖问题**: 回退到以前的工作版本
 
-## Advanced Features
+## 高级功能
 
-### Custom Merge Rules
+### 自定义合并规则
 
-Users can create `.upgrade-rules.json` to specify:
+用户可以创建 `.upgrade-rules.json` 来指定:
 
-- Files to always skip
-- Custom merge preferences
-- Automatic approval for specific change types
-- Backup retention policies
+- 始终跳过的文件
+- 自定义合并偏好
+- 特定更改类型的自动批准
+- 备份保留策略
 
-### Integration with Git
+### 与 Git 集成
 
-- Commits each major change separately
-- Meaningful commit messages describing updates
-- Preserves user's branch structure
-- Handles git conflicts intelligently
+- 分别提交每个主要更改
+- 描述更新的有意义的提交消息
+- 保留用户的分支结构
+- 智能处理 git 冲突
 
-### Selective Updates
+### 选择性更新
 
 ```
-/upgrade commands-only    # Update just commands
-/upgrade agents-only      # Update just agents
-/upgrade scripts-only     # Update just scripts
-/upgrade deps-only        # Update just dependencies
+/upgrade commands-only    # 仅更新命令
+/upgrade agents-only      # 仅更新代理
+/upgrade scripts-only     # 仅更新脚本
+/upgrade deps-only        # 仅更新依赖项
 ```
 
-## CORRECT Implementation Example
+## 正确的实施示例
 
-**THIS is how the upgrade should work:**
+**这应该是升级的工作方式:**
 
 ```bash
-📄 File 1/3: .claude/commands/release.md
+📄 文件 1/3: .claude/commands/release.md
 
-# Step 1: ALWAYS show the diff first
-Checking for differences...
+# 步骤 1: 始终先显示差异
+检查差异...
 
 --- .claude/commands/release.md
 +++ .tmp/claudesidian-upgrade/.claude/commands/release.md
@@ -473,51 +466,51 @@ Checking for differences...
 +
  **MAJOR** (1.0.0 → 2.0.0):
 
-# Step 2: Ask user what to do
-This file has updates available. What would you like to do?
+# 步骤 2: 询问用户要做什么
+此文件有可用更新。您想做什么?
 
-1. Apply update (take upstream version)
-2. Keep your version (skip this update)
-3. View full diff again
-4. Try to merge changes (AI-assisted)
+1. 应用更新(采用上游版本)
+2. 保留您的版本(跳过此更新)
+3. 再次查看完整差异
+4. 尝试合并更改(AI 辅助)
 
-Your choice (1-4): 1
+您的选择 (1-4): 1
 
-Applying update...
-[x] Updated .claude/commands/release.md
+正在应用更新...
+[x] 已更新 .claude/commands/release.md
 ```
 
-**WRONG Implementation (what happened in the test):**
+**错误的实施(测试中发生的情况):**
 
 ```bash
-📄 File 1/3: .claude/commands/release.md
+📄 文件 1/3: .claude/commands/release.md
 
-# NO DIFF SHOWN - WRONG!
-# Just blindly overwrites:
+# 未显示差异 - 错误!
+# 只是盲目覆盖:
 Bash(cat .tmp/claudesidian-upgrade/.claude/commands/release.md > .claude/commands/release.md)
 
-# No user confirmation - WRONG!
-# Could lose customizations!
+# 无用户确认 - 错误!
+# 可能丢失自定义!
 ```
 
-## Example Session
+## 示例会话
 
 ```
 > /upgrade
 
-🔍 Checking for updates...
-📦 Current version: 0.8.2
-🆕 Latest version: 0.8.3
+🔍 检查更新...
+📦 当前版本: 0.8.2
+🆕 最新版本: 0.8.3
 
-💾 Creating backup to .backup/upgrade-2025-09-13-142030/
+💾 创建备份到 .backup/upgrade-2025-09-13-142030/
 
-📋 Creating upgrade checklist...
-Checking system files only (not your personal notes)...
-Found 15 system files with updates available
+📋 创建升级检查清单...
+仅检查系统文件(不是您的个人笔记)...
+发现 15 个系统文件有可用更新
 
-Created .upgrade-checklist.md to track updates:
+已创建 .upgrade-checklist.md 以跟踪更新:
 
-## Commands (8 files)
+## Commands (8 个文件)
 [ ] .claude/commands/init-bootstrap.md
 [ ] .claude/commands/release.md
 [ ] .claude/commands/thinking-partner.md
@@ -527,119 +520,117 @@ Created .upgrade-checklist.md to track updates:
 [ ] .claude/commands/research-assistant.md
 [ ] .claude/commands/weekly-synthesis.md
 
-## Settings (1 file)
+## Settings (1 个文件)
 [ ] .claude/settings.json
 
-## Core Files (3 files)
+## Core Files (3 个文件)
 [ ] package.json
 [ ] CHANGELOG.md
 [ ] README.md
 
-## Scripts (3 files)
+## Scripts (3 个文件)
 [ ] .scripts/vault-stats.sh
 [ ] .scripts/firecrawl-scrape.sh
 [ ] .scripts/setup-mcp.sh
 
-Starting file-by-file review...
+开始逐文件审查...
 
-📄 File 1/15: .claude/commands/init-bootstrap.md
-   Status: No local changes detected
-   Action: Direct update from upstream
-   [x] Updated
+📄 文件 1/15: .claude/commands/init-bootstrap.md
+   状态: 未检测到本地更改
+   操作: 从上游直接更新
+   [x] 已更新
 
-📄 File 2/15: .claude/commands/release.md
-   Status: No local changes detected
-   Action: Direct update from upstream
-   [x] Updated
+📄 文件 2/15: .claude/commands/release.md
+   状态: 未检测到本地更改
+   操作: 从上游直接更新
+   [x] 已更新
 
-📄 File 3/15: .claude/settings.json
-   Status: Has local changes (your custom hooks)
-   Showing diff...
-   Action: Merge needed - preserving your hooks, adding new features
-   [x] Merged
+📄 文件 3/15: .claude/settings.json
+   状态: 有本地更改(您的自定义钩子)
+   显示差异...
+   操作: 需要合并 - 保留您的钩子,添加新功能
+   [x] 已合并
 
-[... continues through all files ...]
+[... 继续处理所有文件 ...]
 
-🔍 **Verification Check**
-Re-checking for any missed system files...
+🔍 **验证检查**
+重新检查任何遗漏的系统文件...
 
-✅ All system files successfully updated!
-No claudesidian system files remain out of sync with upstream.
+✅ 所有系统文件已成功更新!
+没有 claudesidian 系统文件与上游不同步。
 
-🎉 Upgrade complete!
+🎉 升级完成!
 📈 claudesidian 0.8.2 → 0.8.3
 
-✅ Updated: 14 files
-⏭️ Skipped: 1 file (CLAUDE.md - user customization)
-✅ Verified: All system files match upstream
+✅ 已更新: 14 个文件
+⏭️ 已跳过: 1 个文件(CLAUDE.md - 用户自定义)
+✅ 已验证: 所有系统文件与上游匹配
 
-Summary of changes:
-- Fixed init-bootstrap vault selection
-- Improved SessionStart hooks
-- Enhanced user identification prompts
-- Updated all commands to latest versions
+更改摘要:
+- 修复了 init-bootstrap vault 选择
+- 改进了 SessionStart 钩子
+- 增强了用户识别提示
+- 更新了所有命令到最新版本
 ```
 
-### Example: Verification Catches Missed Files
+### 示例: 验证捕获遗漏的文件
 
 ```
-🔍 **Verification Check**
-Re-checking for any missed system files...
+🔍 **验证检查**
+重新检查任何遗漏的系统文件...
 
-⚠️ Warning: 2 files appear to be missed (still marked pending in checklist):
+⚠️ 警告: 2 个文件似乎被遗漏(在清单中仍标记为待处理):
 - .claude/commands/thinking-partner.md [ ]
 - .scripts/vault-stats.sh [ ]
 
-These files haven't been processed yet.
+这些文件尚未处理。
 
-Would you like to complete the upgrade for these files? (y/n) > y
+您想完成这些文件的升级吗? (y/n) > y
 
-📄 Completing upgrade for missed files...
+📄 完成遗漏文件的升级...
 
-📄 File: .claude/commands/thinking-partner.md
-   Status: Reviewing diff...
-   Action: Direct update from upstream
-   [x] Updated
+📄 文件: .claude/commands/thinking-partner.md
+   状态: 审查差异...
+   操作: 从上游直接更新
+   [x] 已更新
 
-📄 File: .scripts/vault-stats.sh
-   Status: Reviewing diff...
-   Action: Direct update from upstream
-   [x] Updated
+📄 文件: .scripts/vault-stats.sh
+   状态: 审查差异...
+   操作: 从上游直接更新
+   [x] 已更新
 
-✅ Verification complete - all system files now match upstream!
+✅ 验证完成 - 所有系统文件现在与上游匹配!
 ```
 
-### Example: Verification with User Customizations
+### 示例: 验证与用户自定义
 
 ```
-🔍 **Verification Check**
-Re-checking for any missed system files...
+🔍 **验证检查**
+重新检查任何遗漏的系统文件...
 
-Files still differing from upstream:
-- .claude/commands/thinking-partner.md [x] ← Updated but user customized
-- package.json [x] ← Merged, kept user's custom scripts
-- .claude/commands/daily-review.md [ ] ← Not processed yet!
+与上游不同的文件:
+- .claude/commands/thinking-partner.md [x] ← 已更新但用户自定义
+- package.json [x] ← 已合并,保留用户自定义脚本
+- .claude/commands/daily-review.md [ ] ← 尚未处理!
 
-✅ 2 files intentionally preserve user customizations
-⚠️ 1 file appears to be missed (still pending)
+✅ 2 个文件有意保留用户自定义
+⚠️ 1 个文件似乎被遗漏(仍待处理)
 
-Would you like to:
-1. Review the missed file (.claude/commands/daily-review.md)
-2. Skip verification (keep current state)
-3. See details about customized files
+您想:
+1. 审查遗漏的文件 (.claude/commands/daily-review.md)
+2. 跳过验证(保持当前状态)
+3. 查看有关自定义文件的详细信息
 
-Choice (1/2/3) > 1
+选择 (1/2/3) > 1
 
-📄 File: .claude/commands/daily-review.md
-   Status: Reviewing diff...
-   Action: Direct update from upstream
-   [x] Updated
+📄 文件: .claude/commands/daily-review.md
+   状态: 审查差异...
+   操作: 从上游直接更新
+   [x] 已更新
 
-✅ Verification complete!
-- All required updates applied
-- User customizations preserved where intended
+✅ 验证完成!
+- 已应用所有必要更新
+- 用户自定义在有意之处保留
 ```
 
-This intelligent upgrade system leverages Claude's semantic understanding to
-provide the smoothest possible upgrade experience while ensuring no user
-customizations are lost.
+这个智能升级系统利用 Claude 的语义理解提供最流畅的升级体验,同时确保不会丢失任何用户自定义。
