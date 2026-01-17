@@ -3,11 +3,11 @@
  * 显示最近的附件 (7 天内)
  */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from 'node:fs'
+import path from 'node:path'
 
-const attachmentsDir = '05_Attachments';
-const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+const attachmentsDir = '05_Attachments'
+const sevenDaysMs = 7 * 24 * 60 * 60 * 1000
 
 function formatDate(date) {
   return date.toLocaleString('zh-CN', {
@@ -15,47 +15,47 @@ function formatDate(date) {
     hour: '2-digit',
     minute: '2-digit',
     month: '2-digit',
-    year: 'numeric'
-  });
+    year: 'numeric',
+  })
 }
 
 function getAllFiles(dir, fileList = []) {
-  const files = fs.readdirSync(dir, { withFileTypes: true });
+  const files = fs.readdirSync(dir, { withFileTypes: true })
 
   for (const file of files) {
-    const filePath = path.join(dir, file.name);
+    const filePath = path.join(dir, file.name)
     if (file.isDirectory()) {
-      getAllFiles(filePath, fileList);
+      getAllFiles(filePath, fileList)
     } else {
-      const stat = fs.statSync(filePath);
-      fileList.push({ mtime: stat.mtime, path: filePath });
+      const stat = fs.statSync(filePath)
+      fileList.push({ mtime: stat.mtime, path: filePath })
     }
   }
 
-  return fileList;
+  return fileList
 }
 
 try {
   if (!fs.existsSync(attachmentsDir)) {
-    console.log('附件文件夹不存在');
-    process.exit(0);
+    console.log('附件文件夹不存在')
+    process.exit(0)
   }
 
-  const allFiles = getAllFiles(attachmentsDir);
-  const now = Date.now();
+  const allFiles = getAllFiles(attachmentsDir)
+  const now = Date.now()
   const recentFiles = allFiles.filter(({ mtime }) => {
-    return now - mtime.getTime() < sevenDaysMs;
-  });
+    return now - mtime.getTime() < sevenDaysMs
+  })
 
   if (recentFiles.length === 0) {
-    console.log('过去 7 天内没有新附件');
+    console.log('过去 7 天内没有新附件')
   } else {
-    recentFiles.sort((a, b) => b.mtime - a.mtime);
+    recentFiles.sort((a, b) => b.mtime - a.mtime)
     recentFiles.forEach(({ mtime, path: filePath }) => {
-      console.log(`${formatDate(mtime)}  ${filePath}`);
-    });
+      console.log(`${formatDate(mtime)}  ${filePath}`)
+    })
   }
 } catch (error) {
-  console.error('错误:', error.message);
-  process.exit(1);
+  console.error('错误:', error.message)
+  process.exit(1)
 }

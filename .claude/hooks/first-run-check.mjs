@@ -4,9 +4,9 @@
  * 如果是第一次运行,显示欢迎信息
  */
 
-import fs from 'node:fs';
+import fs from 'node:fs'
 
-const FIRST_RUN_FILE = 'FIRST_RUN';
+const FIRST_RUN_FILE = 'FIRST_RUN'
 
 if (fs.existsSync(FIRST_RUN_FILE)) {
   const message = `
@@ -31,12 +31,14 @@ if (fs.existsSync(FIRST_RUN_FILE)) {
 ✅ 创建你的 PARA 文件夹结构
 
 设置向导将引导你完成所有步骤!
-`;
+`
 
-  console.log(JSON.stringify({
-    hookSpecificOutput: {
-      additionalContext: message,
-      hookEventName: "SessionStart"
-    }
-  }));
+  console.log(
+    JSON.stringify({
+      hookSpecificOutput: {
+        additionalContext: message,
+        hookEventName: 'SessionStart',
+      },
+    }),
+  )
 }

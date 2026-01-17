@@ -3,19 +3,19 @@
  * 统计已整理的附件数量
  */
 
-import fs from 'node:fs';
+import fs from 'node:fs'
 
-const organizedDir = '05_Attachments/Organized';
+const organizedDir = '05_Attachments/Organized'
 
 try {
   if (!fs.existsSync(organizedDir)) {
-    console.log('0');
-    process.exit(0);
+    console.log('0')
+    process.exit(0)
   }
 
-  const files = fs.readdirSync(organizedDir);
-  console.log(files.length);
+  const files = fs.readdirSync(organizedDir)
+  console.log(files.length)
 } catch (error) {
-  console.error('错误:', error.message);
-  process.exit(1);
+  console.error('错误:', error.message)
+  process.exit(1)
 }
