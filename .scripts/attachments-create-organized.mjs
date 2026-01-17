@@ -3,7 +3,7 @@
  *创建已整理文件夹
  */
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 const organizedDir = '05_Attachments/Organized';
 

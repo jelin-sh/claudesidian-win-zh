@@ -3,8 +3,8 @@
  * 在 Markdown 文件中搜索附件引用
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const searchTerm = process.argv[2];
 

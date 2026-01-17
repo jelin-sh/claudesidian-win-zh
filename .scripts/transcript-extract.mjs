@@ -4,8 +4,8 @@
  * 需要安装 yt-dlp: winget install yt-dlp
  */
 
-import { spawn } from 'child_process';
-import fs from 'fs';
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
 
 const url = process.argv[2];
 

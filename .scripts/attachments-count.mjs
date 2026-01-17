@@ -3,7 +3,7 @@
  * 统计未处理的附件数量
  */
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 const attachmentsDir = '05_Attachments';
 

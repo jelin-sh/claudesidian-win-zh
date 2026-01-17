@@ -4,7 +4,7 @@
  * 如果是第一次运行,显示欢迎信息
  */
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 const FIRST_RUN_FILE = 'FIRST_RUN';
 
@@ -35,8 +35,8 @@ if (fs.existsSync(FIRST_RUN_FILE)) {
 
   console.log(JSON.stringify({
     hookSpecificOutput: {
-      hookEventName: "SessionStart",
-      additionalContext: message
+      additionalContext: message,
+      hookEventName: "SessionStart"
     }
   }));
 }

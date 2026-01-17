@@ -3,11 +3,21 @@
  * 显示最近的附件 (7 天内)
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const attachmentsDir = '05_Attachments';
 const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+
+function formatDate(date) {
+  return date.toLocaleString('zh-CN', {
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+}
 
 function getAllFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir, { withFileTypes: true });
@@ -18,21 +28,11 @@ function getAllFiles(dir, fileList = []) {
       getAllFiles(filePath, fileList);
     } else {
       const stat = fs.statSync(filePath);
-      fileList.push({ path: filePath, mtime: stat.mtime });
+      fileList.push({ mtime: stat.mtime, path: filePath });
     }
   }
 
   return fileList;
-}
-
-function formatDate(date) {
-  return date.toLocaleString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
 }
 
 try {
@@ -51,7 +51,7 @@ try {
     console.log('过去 7 天内没有新附件');
   } else {
     recentFiles.sort((a, b) => b.mtime - a.mtime);
-    recentFiles.forEach(({ path: filePath, mtime }) => {
+    recentFiles.forEach(({ mtime, path: filePath }) => {
       console.log(`${formatDate(mtime)}  ${filePath}`);
     });
   }

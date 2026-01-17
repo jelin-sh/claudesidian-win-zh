@@ -3,34 +3,8 @@
  * 检查是否有新版本的 Claudesidian
  */
 
-import https from 'https';
-import fs from 'fs';
-
-function getLatestVersion() {
-  return new Promise((resolve, reject) => {
-    https.get('https://raw.githubusercontent.com/jelin-sh/claudesidian-win-zh/refs/heads/main/package.json', (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        try {
-          const packageJson = JSON.parse(data);
-          resolve(packageJson.version);
-        } catch (error) {
-          reject(error);
-        }
-      });
-    }).on('error', reject);
-  });
-}
-
-function getLocalVersion() {
-  try {
-    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-    return packageJson.version;
-  } catch (error) {
-    return null;
-  }
-}
+import fs from 'node:fs';
+import https from 'node:https';
 
 async function checkUpdates() {
   try {
@@ -57,6 +31,32 @@ async function checkUpdates() {
     }
   } catch (error) {
     // 静默失败,避免干扰用户体验
+  }
+}
+
+function getLatestVersion() {
+  return new Promise((resolve, reject) => {
+    https.get('https://raw.githubusercontent.com/jelin-sh/claudesidian-win-zh/refs/heads/main/package.json', (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const packageJson = JSON.parse(data);
+          resolve(packageJson.version);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }).on('error', reject);
+  });
+}
+
+function getLocalVersion() {
+  try {
+    const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+    return packageJson.version;
+  } catch (error) {
+    return null;
   }
 }
 

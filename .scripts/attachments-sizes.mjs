@@ -3,20 +3,10 @@
  * 查找大附件 (前 20 个)
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const attachmentsDir = '05_Attachments';
-
-function getFileSize(filePath) {
-  const stats = fs.statSync(filePath);
-  const size = stats.size;
-
-  if (size < 1024) return size + ' B';
-  if (size < 1024 * 1024) return (size / 1024).toFixed(2) + ' KB';
-  if (size < 1024 * 1024 * 1024) return (size / (1024 * 1024)).toFixed(2) + ' MB';
-  return (size / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
-}
 
 function getAllFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
@@ -33,6 +23,16 @@ function getAllFiles(dir, fileList = []) {
   });
 
   return fileList;
+}
+
+function getFileSize(filePath) {
+  const stats = fs.statSync(filePath);
+  const size = stats.size;
+
+  if (size < 1024) return `${size  } B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)  } KB`;
+  if (size < 1024 * 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(2)  } MB`;
+  return `${(size / (1024 * 1024 * 1024)).toFixed(2)  } GB`;
 }
 
 try {

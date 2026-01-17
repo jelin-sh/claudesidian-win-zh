@@ -9,77 +9,14 @@
  * 需要: FIRECRAWL_API_KEY 环境变量
  */
 
-import https from 'https';
-import http from 'http';
-import { URL } from 'url';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import http from 'node:http';
+import https from 'node:https';
+import path from 'node:path';
+import { URL } from 'node:url';
 
 const url = process.argv[2];
 const outputPath = process.argv[3];
-
-async function makeRequest(url, data) {
-  return new Promise((resolve, reject) => {
-    const urlObj = new URL(url);
-    const options = {
-      hostname: urlObj.hostname,
-      port: urlObj.port || (urlObj.protocol === 'https:' ? 443 : 80),
-      path: urlObj.pathname + urlObj.search,
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${data.apiKey}`,
-        'Content-Type': 'application/json',
-      }
-    };
-
-    const protocol = urlObj.protocol === 'https:' ? https : http;
-    const req = protocol.request(options, (res) => {
-      let responseData = '';
-      res.on('data', (chunk) => {
-        responseData += chunk;
-      });
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(responseData);
-          if (res.statusCode >= 200 && res.statusCode < 300) {
-            resolve(parsed);
-          } else {
-            reject(new Error(`HTTP ${res.statusCode}: ${parsed.error || responseData}`));
-          }
-        } catch (e) {
-          reject(new Error(`解析响应失败: ${e.message}`));
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.write(JSON.stringify(data.body));
-    req.end();
-  });
-}
-
-async function scrapeWebPage(url, apiKey) {
-  const data = {
-    apiKey,
-    body: {
-      url: url,
-      formats: ['markdown'],
-      onlyMainContent: true
-    }
-  };
-
-  try {
-    const response = await makeRequest('https://api.firecrawl.dev/v1/scrape', data);
-
-    if (response.data && response.data.markdown) {
-      return response.data.markdown;
-    } else {
-      throw new Error('响应中没有 markdown 内容');
-    }
-  } catch (error) {
-    throw new Error(`抓取失败: ${error.message}`);
-  }
-}
 
 async function main() {
   if (!url || !outputPath) {
@@ -126,6 +63,69 @@ async function main() {
   } catch (error) {
     console.error(`❌ ${error.message}`);
     process.exit(1);
+  }
+}
+
+async function makeRequest(url, data) {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(url);
+    const options = {
+      headers: {
+        'Authorization': `Bearer ${data.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      hostname: urlObj.hostname,
+      method: 'POST',
+      path: urlObj.pathname + urlObj.search,
+      port: urlObj.port || (urlObj.protocol === 'https:' ? 443 : 80)
+    };
+
+    const protocol = urlObj.protocol === 'https:' ? https : http;
+    const req = protocol.request(options, (res) => {
+      let responseData = '';
+      res.on('data', (chunk) => {
+        responseData += chunk;
+      });
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(responseData);
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            resolve(parsed);
+          } else {
+            reject(new Error(`HTTP ${res.statusCode}: ${parsed.error || responseData}`));
+          }
+        } catch (e) {
+          reject(new Error(`解析响应失败: ${e.message}`));
+        }
+      });
+    });
+
+    req.on('error', reject);
+    req.write(JSON.stringify(data.body));
+    req.end();
+  });
+}
+
+async function scrapeWebPage(url, apiKey) {
+  const data = {
+    apiKey,
+    body: {
+      formats: ['markdown'],
+      onlyMainContent: true,
+      url
+    }
+  };
+
+  try {
+    const response = await makeRequest('https://api.firecrawl.dev/v1/scrape', data);
+
+    if (response.data && response.data.markdown) {
+      return response.data.markdown;
+    } 
+      throw new Error('响应中没有 markdown 内容');
+    
+  } catch (error) {
+    throw new Error(`抓取失败: ${error.message}`);
   }
 }
 

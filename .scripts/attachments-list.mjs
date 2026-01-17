@@ -3,8 +3,7 @@
  * 列出未处理的附件 (最多 20 个)
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
 
 const attachmentsDir = '05_Attachments';
 

@@ -3,29 +3,11 @@
  * 查找未被引用的附件
  */
 
-import fs from 'fs';
-import path from 'path';
-import { readFileSync } from 'fs';
+import fs, { readFileSync } from 'node:fs';
+import path from 'node:path';
+
 
 const attachmentsDir = '05_Attachments';
-
-function getAllMarkdownFiles(dir, fileList = []) {
-  const files = fs.readdirSync(dir, { withFileTypes: true });
-
-  for (const file of files) {
-    const filePath = path.join(dir, file.name);
-    if (file.isDirectory()) {
-      // 跳过 node_modules 和 .git
-      if (file.name !== 'node_modules' && file.name !== '.git') {
-        getAllMarkdownFiles(filePath, fileList);
-      }
-    } else if (file.name.endsWith('.md')) {
-      fileList.push(filePath);
-    }
-  }
-
-  return fileList;
-}
 
 function getAllAttachments(dir, fileList = []) {
   const files = fs.readdirSync(dir, { withFileTypes: true });
@@ -39,6 +21,24 @@ function getAllAttachments(dir, fileList = []) {
       }
     } else {
       fileList.push({ name: file.name, path: filePath });
+    }
+  }
+
+  return fileList;
+}
+
+function getAllMarkdownFiles(dir, fileList = []) {
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const file of files) {
+    const filePath = path.join(dir, file.name);
+    if (file.isDirectory()) {
+      // 跳过 node_modules 和 .git
+      if (file.name !== 'node_modules' && file.name !== '.git') {
+        getAllMarkdownFiles(filePath, fileList);
+      }
+    } else if (file.name.endsWith('.md')) {
+      fileList.push(filePath);
     }
   }
 

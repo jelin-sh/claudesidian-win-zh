@@ -3,7 +3,7 @@
  * 统计已整理的附件数量
  */
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 const organizedDir = '05_Attachments/Organized';
 

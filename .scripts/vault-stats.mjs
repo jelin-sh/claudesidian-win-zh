@@ -4,26 +4,8 @@
  * 显示 Obsidian 仓库的基本统计信息
  */
 
-import fs from 'fs';
-import path from 'path';
-
-function countMarkdownFiles(dir) {
-  if (!fs.existsSync(dir)) return 0;
-
-  let count = 0;
-  const files = fs.readdirSync(dir, { withFileTypes: true });
-
-  for (const file of files) {
-    const filePath = path.join(dir, file.name);
-    if (file.isDirectory()) {
-      count += countMarkdownFiles(filePath);
-    } else if (file.name.endsWith('.md')) {
-      count++;
-    }
-  }
-
-  return count;
-}
+import fs from 'node:fs';
+import path from 'node:path';
 
 function countFiles(dir) {
   if (!fs.existsSync(dir)) return 0;
@@ -43,6 +25,33 @@ function countFiles(dir) {
   return count;
 }
 
+function countMarkdownFiles(dir) {
+  if (!fs.existsSync(dir)) return 0;
+
+  let count = 0;
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const file of files) {
+    const filePath = path.join(dir, file.name);
+    if (file.isDirectory()) {
+      count += countMarkdownFiles(filePath);
+    } else if (file.name.endsWith('.md')) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString('zh-CN', {
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    month: '2-digit'
+  });
+}
+
 function getRecentFiles(dir, days = 7, limit = 5) {
   if (!fs.existsSync(dir)) return [];
 
@@ -60,7 +69,7 @@ function getRecentFiles(dir, days = 7, limit = 5) {
       } else if (file.name.endsWith('.md')) {
         const stat = fs.statSync(filePath);
         if (now - stat.mtime.getTime() < cutoffMs) {
-          recentFiles.push({ name: file.name, mtime: stat.mtime });
+          recentFiles.push({ mtime: stat.mtime, name: file.name });
         }
       }
     }
@@ -69,15 +78,6 @@ function getRecentFiles(dir, days = 7, limit = 5) {
   scanDir(dir);
   recentFiles.sort((a, b) => b.mtime - a.mtime);
   return recentFiles.slice(0, limit);
-}
-
-function formatDate(date) {
-  return date.toLocaleDateString('zh-CN', {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
 }
 
 console.log('=== 仓库统计 ===');
@@ -104,7 +104,7 @@ const recentFiles = getRecentFiles('.', 7, 5);
 if (recentFiles.length === 0) {
   console.log('  没有最近修改的文件');
 } else {
-  recentFiles.forEach(({ name, mtime }) => {
+  recentFiles.forEach(({ mtime, name }) => {
     console.log(`  - ${name} (${formatDate(mtime)})`);
   });
 }

@@ -5,8 +5,8 @@
  * 无依赖 - 纯 Node.js
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 // 读取所有 stdin
 let input = '';
