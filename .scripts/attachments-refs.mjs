@@ -38,7 +38,7 @@ function searchInMarkdownFiles(dir, searchTerm, results = []) {
         if (matchingLines.length > 0) {
           results.push({ file: filePath, matches: matchingLines });
         }
-      } catch (error) {
+      } catch (_error) {
         // 跳过无法读取的文件
       }
     }
@@ -53,12 +53,12 @@ try {
   if (results.length === 0) {
     console.log(`未找到包含 "${searchTerm}" 的引用`);
   } else {
-    let count = 0;
+    let _count = 0;
     results.slice(0, 20).forEach(({ file, matches }) => {
       console.log(`\n${file}:`);
       matches.slice(0, 5).forEach(match => {
         console.log(`  ${match}`);
-        count++;
+        _count++;
       });
     });
 

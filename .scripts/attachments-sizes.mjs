@@ -45,7 +45,7 @@ try {
   allFiles.sort((a, b) => b.size - a.size);
 
   const toShow = allFiles.slice(0, 20);
-  toShow.forEach(({ path: filePath, size }) => {
+  toShow.forEach(({ path: filePath, size: _size }) => {
     console.log(`${getFileSize(filePath).padStart(10)}  ${filePath}`);
   });
 } catch (error) {

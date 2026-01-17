@@ -29,7 +29,7 @@ async function checkUpdates() {
       console.log('✅ 保留你的仓库内容和设置');
       console.log('');
     }
-  } catch (error) {
+  } catch (_error) {
     // 静默失败,避免干扰用户体验
   }
 }
@@ -43,8 +43,8 @@ function getLatestVersion() {
         try {
           const packageJson = JSON.parse(data);
           resolve(packageJson.version);
-        } catch (error) {
-          reject(error);
+        } catch (_error) {
+          reject(_error);
         }
       });
     }).on('error', reject);
@@ -55,7 +55,7 @@ function getLocalVersion() {
   try {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
     return packageJson.version;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }

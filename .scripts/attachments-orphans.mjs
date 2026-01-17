@@ -63,7 +63,7 @@ try {
   const markdownFiles = getAllMarkdownFiles('.');
   const attachments = getAllAttachments(attachmentsDir);
 
-  const orphans = attachments.filter(({ name, path: filePath }) => {
+  const orphans = attachments.filter(({ name, path: _filePath }) => {
     return !markdownFiles.some(mdFile => searchInFile(mdFile, name));
   });
 

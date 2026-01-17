@@ -65,7 +65,7 @@ process.stdin.on('end', () => {
       console.log('如果与用户的请求相关,请读取 SKILL.md 文件以加载技能说明。');
       console.log('</skill-discovery>');
     }
-  } catch (error) {
+  } catch (_error) {
     // 静默失败,不阻塞用户提示
   }
 
