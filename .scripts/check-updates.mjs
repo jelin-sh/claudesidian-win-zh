@@ -8,7 +8,7 @@ import fs from 'fs';
 
 function getLatestVersion() {
   return new Promise((resolve, reject) => {
-    https.get('https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json', (res) => {
+    https.get('https://raw.githubusercontent.com/jelin-sh/claudesidian-win-zh/refs/heads/main/package.json', (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {

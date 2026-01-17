@@ -30,7 +30,7 @@ argument-hint:
   ```bash
   # 使用 cut 而不是 sed 以避免 zsh 括号转义问题
   CURRENT=$(grep '"version"' package.json | head -1 | cut -d'"' -f4)
-  LATEST=$(curl -s https://raw.githubusercontent.com/heyitsnoah/claudesidian/main/package.json | grep '"version"' | head -1 | cut -d'"' -f4)
+  LATEST=$(curl -s https://raw.githubusercontent.com/jelin-sh/claudesidian-win-zh/refs/heads/main/package.json | grep '"version"' | head -1 | cut -d'"' -f4)
 
   if [ "$CURRENT" = "$LATEST" ]; then
     echo "✅ You're already on the latest version ($CURRENT)"
@@ -58,7 +58,7 @@ argument-hint:
 - 将最新的 claudesidian 克隆到临时目录(不影响用户的仓库):
   ```bash
   # 在 .tmp 目录中获取新副本 (对 Obsidian 隐藏) - 用户的仓库保持断开连接
-  git clone --depth=1 --branch=main https://github.com/heyitsnoah/claudesidian.git .tmp/claudesidian-upgrade
+  git clone --depth=1 --branch=main https://github.com/jelin-sh/claudesidian-win-zh.git .tmp/claudesidian-upgrade
   ```
 - 现在我们有了最新版本进行比较
 
